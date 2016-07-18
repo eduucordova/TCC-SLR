@@ -1,0 +1,149 @@
+<br>
+<div class="container-fluid">
+
+  <ol class="breadcrumb">
+    <li class="active"> Protocolo </li>
+    <li><%= link_to 'Execução da Busca', search_protocol_path %></li>
+    <% unless @ref_protocol.nil? %>
+        <li><%= link_to 'Resultados Retornados', reference_path %></li>
+    <% end %>
+  </ol>
+
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <b><%= @protocol.title  %> </b>
+      </div>
+        <div class="panel-body">
+          <div class="row">
+            <div class="col-lg-12" align="left">
+              <b> Título: </b> <%= @protocol.title %> <br><br>
+              <b> Contextualização: </b> <br> <p> <%= @protocol.background %></p><br>
+              <b> Pergunta de Pesquisa: </b> <br> <p> <%= @protocol.research_question %> </p><br>
+              <b> Estratégia: </b> <br> <p> <%= @protocol.strategy %> </p><br>
+              <b> Critérios de Qualidade: </b> <br> <p> <%= @protocol.quality %> </p><br>
+              <b> Critérios de Inclusão/Exclusão: </b> <br> <p> <%= @protocol.criteria %> </p><br>
+              <b> Data de Publicação: </b> <br> <p> <%= @protocol.from.to_s + " - " + @protocol.to.to_s %> </p><br>
+              <b> No. máximo de resultados de busca retornados por base : </b> <br> <p> <%= @protocol.results_returned %> </p><br>
+
+              <b> Bases Digitais: </b> <br>
+
+              <!-- Jogar esta lógica para o controller -->
+              <ul>
+                <% if @protocol.ieee %>
+                    <li>
+                      IEEE Xplore
+                    </li>
+                <% end %>
+                <% if @protocol.acm %>
+                    <li>
+                      ACM Digital Library
+                    </li>
+                <% end %>
+
+                <% if @protocol.springer %>
+                    <li>
+                      Springer Link
+                    </li>
+                <% end %>
+                <% if @protocol.science_direct %>
+                    <li>
+                      Science Direct
+                    </li>
+                <% end %>
+                <% if @protocol.scopus %>
+                    <li>
+                      Scopus
+                    </li>
+                <% end %>
+              </ul><br>
+
+              <b> Termos de Busca: </b><br><br>
+              <div class="container-fluid">
+                <table class="table table-bordered">
+                  <thead>
+                  <tr>
+                    <th>Termos</th>
+                    <th>Sinônimos</th>
+                    <th>Tradução (Inglês)</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  <% @protocol.terms.each do |term|  %>
+                      <tr>
+                        <td><%= term.termo %></td>
+                        <% if term.sinonimo == '' && term.sinonimo2 == '' %>
+                            <td><%= 'Nenhum sinônimo adicionado' %></td>
+                        <% else %>
+                            <% if term.sinonimo != '' && term.sinonimo2 != '' %>
+                                <td><%= term.sinonimo + ', ' + term.sinonimo2 %></td>
+                            <% else if term.sinonimo == '' %>
+                                        <td><%= term.sinonimo2 %></td>
+                                    <% else %>
+                                        <td><%= term.sinonimo %></td>
+                                    <% end %>
+                            <% end %>
+                        <% end %>
+
+                        <% if term.traducao2 == '' && term.traducao3 == '' && term.traducao == '' %>
+                            <td><%= 'Nenhuma tradução adicionada' %></td>
+                        <% else %>
+                            <% if term.traducao == '' && term.traducao2 == '' %>
+                                <td><%= term.traducao3 %></td>
+                            <% else if term.traducao == '' && term.traducao3 == ''%>
+                                    <td><%= term.traducao2 %></td>
+                                <% else if term.traducao2 == '' && term.traducao3 == ''%>
+                                    <td><%= term.traducao %></td>
+                                    <% else if term.traducao != '' && term.traducao2 != '' && term.traducao3 != ''%>
+                                            <td><%= term.traducao + ', ' + term.traducao2 + ', ' + term.traducao3 %></td>
+                                        <% else if term.traducao != '' && term.traducao2 != '' %>
+                                                <td><%= term.traducao + ', ' + term.traducao2 %></td>
+                                            <% else if term.traducao2 != '' && term.traducao3 != '' %>
+                                                <td><%= term.traducao2 + ', ' + term.traducao3 %></td>
+                                                <% end %>
+                                            <% end %>
+                                        <% end %>
+                                    <% end %>
+                                <% end %>
+                            <% end %>
+                        <% end %>
+                      </tr>
+                  <% end %>
+                  </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+  <div class="btn-group">
+
+    <%= link_to protocols_path, class: "btn btn-default" do %>
+        <span class="glyphicon glyphicon-step-backward"></span>
+        Voltar
+    <% end %>
+
+    <%= link_to @protocol, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-default" do %>
+        <span class="glyphicon glyphicon-trash"></span>
+        Deletar
+    <% end %>
+
+    <%= link_to edit_protocol_path(@protocol), class: "btn btn-default" do %>
+        <span class="glyphicon glyphicon-edit"></span>
+        Editar
+    <% end %>
+
+  </div>
+
+  <div class="btn-group">
+    <%= link_to search_protocol_path, class: "btn btn-default" do %>
+        Continuar
+        <span class="glyphicon glyphicon-step-forward"></span>
+    <% end %>
+  </div>
+
+  <br><br><br>
+
+
+
+</div>
+
+

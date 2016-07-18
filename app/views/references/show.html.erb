@@ -1,0 +1,126 @@
+<br>
+
+<ol class="breadcrumb">
+  <li><%= link_to 'Protocolo', protocol_path %></li>
+  <li><%= link_to 'Execução da Busca', search_protocol_path %></li>
+  <li class="active"> Resultados Retornados </li>
+</ol>
+
+<div class="container-fluid">
+  <div class="table">
+    <table class="table table-hover">
+      <tr>
+        <th> Base Digital </th>
+        <th> Resultado Total </th>
+        <th> Resultados a serem analisados </th>
+        <th> Data </th>
+      </tr>
+      <tr>
+        <% Reference.all.each do |reference| %>
+            <% if reference.protocol_id == params[:id] %>
+              <% if reference.database == 'scopu' %>
+                  <tr>
+                    <td>
+                      <% if reference.total_found == 0 %>
+                        <%= reference.database_name %>
+                      <% else %>
+                        <%= link_to reference.database_name, scopu_path %>
+                      <% end %>
+                    </td>
+                    <td align="center">
+                      <%= reference.total_found %>
+                    </td>
+                    <td align="center">
+                      <%= reference.results %>
+                    </td>
+                    <td>
+                      <%= (reference.updated_at.to_s[0..10])%>
+                    </td>
+                  </tr>
+              <% end %>
+              <% if reference.database == 'ieee' %>
+                  <tr>
+                    <td>
+                      <% if reference.total_found == 0 %>
+                          <%= reference.database_name %>
+                      <% else %>
+                          <%= link_to reference.database_name, ieee_path %>
+                      <% end %>
+                    </td>
+                    <td align="center">
+                      <%= reference.total_found %>
+                    </td>
+                    <td align="center">
+                      <%= reference.results %>
+                    </td>
+                    <td>
+                      <%= (reference.updated_at.to_s[0..10])%>
+                    </td>
+                  </tr>
+              <% end %>
+              <% if reference.database == 'scidir' %>
+                  <tr>
+                    <td>
+                      <% if reference.total_found == 0 %>
+                          <%= reference.database_name %>
+                      <% else %>
+                          <%= link_to reference.database_name, scidir_path %>
+                      <% end %>
+                    </td>
+                    <td align="center">
+                      <%= reference.total_found %>
+                    </td>
+                    <td align="center">
+                      <%= reference.results %>
+                    </td>
+                    <td>
+                      <%= (reference.updated_at.to_s[0..10])%>
+                    </td>
+                  </tr>
+              <% end %>
+              <% if reference.database == 'acm' %>
+                  <tr>
+                    <td>
+                      <% if reference.total_found == 0 %>
+                          <%= reference.database_name %>
+                      <% else %>
+                          <%= link_to reference.database_name, acm_path %>
+                      <% end %>
+                    </td>
+                    <td align="center">
+                      <%= reference.total_found %>
+                    </td>
+                    <td align="center">
+                      <%= reference.results %>
+                    </td>
+                    <td>
+                      <%= (reference.updated_at.to_s[0..10])%>
+                    </td>
+                  </tr>
+              <% end %>
+              <% if reference.database == 'springer' %>
+                  <tr>
+                    <td>
+                      <% if reference.total_found == 0 %>
+                          <%= reference.database_name %>
+                      <% else %>
+                          <%= link_to reference.database_name, springer_path %>
+                      <% end %>
+                    </td>
+                    <td align="center">
+                      <%= reference.total_found %>
+                    </td>
+                    <td align="center">
+                      <%= reference.results %>
+                    </td>
+                    <td>
+                      <%= (reference.updated_at.to_s[0..10])%>
+                    </td>
+                  </tr>
+              <% end %>
+            <% end %>
+        <% end %>
+      </tr>
+    </table>
+  </div>
+</div>

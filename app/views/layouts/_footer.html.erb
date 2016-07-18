@@ -1,0 +1,33 @@
+<footer>
+    <div id="page_footer_logos">
+      <table cellpadding="0" cellspacing="0" border="0" width="100%">
+        <tr>
+          <td width="80%" id="body_footer">
+            <br>
+            <strong>Software Quality Group - GQS</strong>
+            <br> National Institute for Research and Technology on
+            Digital Convergence - INCOD
+            <br> Department of Informatics and Statistics - INE
+            <br> Federal University of Santa Catarina - UFSC
+            <br> 88049-200 Florianopolis - SC Brazil
+            <br> incod@incod.ufsc.br
+          </td>
+        </tr>
+      </table>
+    </div>
+
+  <div align="center" id="links_footer">
+    <table>
+      <tbody>
+      <tr>
+        <td valign="middle" align="center" colspan="3" >
+          <%= link_to 'Regras Comunitárias', community_rules_path %>
+          | <%= link_to 'Política de Privacidade', privacy_policy_path %>
+          | <%= link_to 'Termos de Uso', terms_of_service_path %>
+          | <%= link_to 'Manual do Usuário', user_manual_path(format: "pdf") %>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</footer>
