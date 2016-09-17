@@ -23,7 +23,7 @@ class ProtocolsController < ApplicationController
     @protocol.acm = true
     @protocol.springer = true
     @protocol.from = 2005
-    @protocol.to = 2015
+    @protocol.to = 2016
   end
 
   # GET /protocols/1/edit
