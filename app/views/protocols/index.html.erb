@@ -1,45 +1,53 @@
 <br>
 <% if user_signed_in? %>
     <div class="panel panel-default">
-      <div class="panel panel-heading">
-        <strong> Protocolos cadastrados </strong>
-      </div>
-      <div class="panel-body">
-        <!-- Eliminar este find by na VIEW!! -->
-        <% if Protocol.find_by_user_id(current_user).nil? %>
-            <p> Usuário não possui nenhum protocolo cadastrado. </p>
-        <% end %>
-        <% @protocols.each do |protocol| %>
-            <% if protocol.user == current_user %>
+        <div class="panel panel-heading">
+            <strong> Protocolos cadastrados </strong>
+        </div>
+        <div class="panel-body">
+            <% if !@protocols.any? %>
+                <p> Usuário não possui nenhum protocolo cadastrado. </p>
+            <% else %>
                 <div class="panel panel-default">
-                  <div class="panel-body">
-                    <h2>
-                      <%= link_to protocol.title, protocol %> <br>
-                      <small class="author">Submetido em <%= (protocol.created_at.to_s[0..10]) %> </small>
-                    </h2>
-                  </div>
+                    <table class="table table-hover" id="tblProtocols">
+                        <thead>
+                        <tr>
+                            <th>Título</th>
+                            <th>Submetido</th>
+                            <th>Papel</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <% @protocols.each do |protocol| %>
+                            <tr>
+                                <td><%= link_to protocol.title, protocol %></td>
+                                <td><%= (protocol.created_at.to_s[0..10]) %></td>
+                                <td><%= protocol.id %></td>
+                            </tr>
+                        <% end %>
+                        </tbody>
+                    </table>
                 </div>
             <% end %>
-        <% end %>
-      </div>
+        </div>
     </div>
 <% else %>
     <div class="alert alert-warning"><b> Usuário deve estar cadastrado para utilizar a ferramenta. </b></div>
 
-   <!-- <table class="table" id="table_info">
-      <tr>
-        <td>
-          <p class="text-justify" id="text_intro">
-            A ferramenta RESuLT é resultado do levantamento do estado da arte sobre aplicações online
-            cujo enfoque seja a automatização de buscas e a seleção dos estudos nas bases digitais em uma revisão sistemática da literatura.
-            Com o objetivo de auxiliar a execução das buscas nas bases,
-            bem como a seleção dos estudos relevantes encontrados, esta ferramenta foi desenvolvida. O desenvolvimento da
-            aplicação foi feito com base no processo definido por
-            e voltado para as bases digitais relacionadas a área da engenharia de software.
-          </p>
-        </td>
-      </tr>
-    </table>-->
+    <!-- <table class="table" id="table_info">
+       <tr>
+         <td>
+           <p class="text-justify" id="text_intro">
+             A ferramenta RESuLT é resultado do levantamento do estado da arte sobre aplicações online
+             cujo enfoque seja a automatização de buscas e a seleção dos estudos nas bases digitais em uma revisão sistemática da literatura.
+             Com o objetivo de auxiliar a execução das buscas nas bases,
+             bem como a seleção dos estudos relevantes encontrados, esta ferramenta foi desenvolvida. O desenvolvimento da
+             aplicação foi feito com base no processo definido por
+             e voltado para as bases digitais relacionadas a área da engenharia de software.
+           </p>
+         </td>
+       </tr>
+     </table>-->
 
 <% end %>
 

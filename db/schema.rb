@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151125180519) do
+ActiveRecord::Schema.define(version: 20170111121459) do
 
   create_table "acms", force: :cascade do |t|
     t.text     "abstract",       limit: 65535
@@ -83,7 +83,6 @@ ActiveRecord::Schema.define(version: 20151125180519) do
     t.text     "criteria",          limit: 65535
     t.datetime "created_at",                      null: false
     t.datetime "updated_at",                      null: false
-    t.integer  "user_id",           limit: 4
     t.text     "query",             limit: 65535
     t.integer  "from",              limit: 4
     t.integer  "to",                limit: 4
@@ -96,8 +95,6 @@ ActiveRecord::Schema.define(version: 20151125180519) do
     t.boolean  "scopus",            limit: 1
     t.integer  "results_returned",  limit: 4
   end
-
-  add_index "protocols", ["user_id"], name: "index_protocols_on_user_id", using: :btree
 
   create_table "references", force: :cascade do |t|
     t.datetime "created_at",                null: false
@@ -199,4 +196,16 @@ ActiveRecord::Schema.define(version: 20151125180519) do
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
   add_index "users", ["username"], name: "index_users_on_username", unique: true, using: :btree
 
+  create_table "users_protocols", force: :cascade do |t|
+    t.integer  "user_id",     limit: 4
+    t.integer  "protocol_id", limit: 4
+    t.datetime "created_at",            null: false
+    t.datetime "updated_at",            null: false
+  end
+
+  add_index "users_protocols", ["protocol_id"], name: "index_users_protocols_on_protocol_id", using: :btree
+  add_index "users_protocols", ["user_id"], name: "index_users_protocols_on_user_id", using: :btree
+
+  add_foreign_key "users_protocols", "protocols"
+  add_foreign_key "users_protocols", "users"
 end
