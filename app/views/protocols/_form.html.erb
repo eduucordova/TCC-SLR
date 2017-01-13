@@ -166,31 +166,6 @@ Os seguintes tipos de trabalhos serão excluídos:
             <div class="panel panel-default" align="left"><b> Convidar Parceiros </b>
                 <div class="panel-body">
                     <div class="form-group">
-                        <table>
-                            <tr>
-                                <td>
-                                    <%= f.label :id, 'Usuário' %>
-                                </td>
-                                <td>
-                                    <%= f.label :to, 'Papel' %>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <% usersOptions = options_from_collection_for_select(@all_users, 'id', 'username') %>
-                                    <%= f.select :id,  usersOptions, {include_blank: true} %>
-                                </td>
-                                <td>
-                                    <%= f.select(:to, options_for_select(
-                                        [['Pesquisador'], ['Revisor']])) %>
-                                </td>
-                                <td>
-                                    <%= link_to_add_fields (button_to 'Adicionar parceiro', class: 'btn btn-primary'), f, :terms %>
-                                </td>
-                            </tr>
-                        </table>
-                    </div>
-                    <div class="form-group">
                         <table class="table table-striped table-bordered">
                             <thead>
                             <tr>
@@ -200,13 +175,36 @@ Os seguintes tipos de trabalhos serão excluídos:
                             </tr>
                             </thead>
                             <tbody>
-                            <% @protocol_users.each do |user| %>
+                            <%= f.fields_for :users_protocols do |ff| %>
                                 <tr>
-                                    <td><%= user.username %></td>
-                                    <td>papel</td>
+                                    <td><%= ff.object.user.username %></td>
+                                    <td><%= ff.object.role.name %></td>
                                 </tr>
                             <% end %>
                             </tbody>
+                        </table>
+                    </div>
+                    <div class="form-group">
+                        <table>
+                            <tr>
+                                <td>
+                                    <%= f.label :usuário %>
+                                </td>
+                                <td>
+                                    <%= f.label :papel %>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <%= f.collection_select(:user_ids, User.all, :id, :username, { include_blank: true}) %>
+                                </td>
+                                <td>
+                                    <%= f.collection_select(:user_ids, Role.all, :id, :name, { include_blank: true}) %>
+                                </td>
+                                <td>
+                                    <%= button_to 'Adicionar parceiro', {}, {id: 'btnTeste'} %>
+                                </td>
+                            </tr>
                         </table>
                     </div>
                 </div>

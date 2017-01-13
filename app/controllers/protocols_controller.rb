@@ -5,7 +5,11 @@ class ProtocolsController < ApplicationController
     # GET /protocols.json
     def index
         if !current_user.nil?
-            @protocols = current_user.protocols
+            @users_protocols = current_user.users_protocols.includes(:protocol).each do |user_protocol|
+                puts user_protocol.role.name
+                puts user_protocol.protocol.title
+                puts user_protocol.protocol.created_at
+            end
         end
     end
 
@@ -16,13 +20,11 @@ class ProtocolsController < ApplicationController
 
     # GET /protocols/new
     def new
-        @all_users = User.all
+        @all_roles = Role.all
         @protocol = current_user.protocols.build
-        @protocol_users = @protocol.users
-        @protocol_users.push(current_user)
-
 
         1.times { @protocol.terms.build }
+        1.times { @protocol.users_protocols.build }
 
         @protocol.ieee = true
         @protocol.science_direct = true
@@ -35,8 +37,7 @@ class ProtocolsController < ApplicationController
 
     # GET /protocols/1/edit
     def edit
-        @all_users = User.all
-        @protocol_users = Protocol.find(params[:id]).users
+        @all_roles = Role.all
     end
 
     # POST /protocols
@@ -274,13 +275,17 @@ class ProtocolsController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_protocol
         @protocol = Protocol.find(params[:id])
+        @protocol_users = @protocol.users_protocols.includes(:user).each do |user_protocol|
+            puts user_protocol.role.name
+            puts user_protocol.user.username
+        end
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def protocol_params
         params.require(:protocol).permit(:id, :title, :background, :research_question, :strategy, :criteria, :from, :to, :results_returned,
                                          :ieee, :acm, :springer, :science_direct, :google_scholar, :scopus, :quality,
-                                         :users => [:id, :name, :role],
+                                         :users_protocols_attributes => [:user_id, :role_id],
                                          :terms_attributes => [:id, :termo, :sinonimo, :sinonimo2, :sinonimo3, :traducao, :traducao2, :traducao3])
     end
 

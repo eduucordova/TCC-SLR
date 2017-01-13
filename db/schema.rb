@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170111121459) do
+ActiveRecord::Schema.define(version: 20170112120932) do
 
   create_table "acms", force: :cascade do |t|
     t.text     "abstract",       limit: 65535
@@ -108,6 +108,10 @@ ActiveRecord::Schema.define(version: 20170111121459) do
 
   add_index "references", ["protocol_id"], name: "index_references_on_protocol_id", using: :btree
 
+  create_table "roles", force: :cascade do |t|
+    t.string "name", limit: 255
+  end
+
   create_table "scidirs", force: :cascade do |t|
     t.text     "abstract",       limit: 65535
     t.string   "author",         limit: 255
@@ -201,11 +205,14 @@ ActiveRecord::Schema.define(version: 20170111121459) do
     t.integer  "protocol_id", limit: 4
     t.datetime "created_at",            null: false
     t.datetime "updated_at",            null: false
+    t.integer  "role_id",     limit: 4
   end
 
   add_index "users_protocols", ["protocol_id"], name: "index_users_protocols_on_protocol_id", using: :btree
+  add_index "users_protocols", ["role_id"], name: "index_users_protocols_on_role_id", using: :btree
   add_index "users_protocols", ["user_id"], name: "index_users_protocols_on_user_id", using: :btree
 
   add_foreign_key "users_protocols", "protocols"
+  add_foreign_key "users_protocols", "roles"
   add_foreign_key "users_protocols", "users"
 end

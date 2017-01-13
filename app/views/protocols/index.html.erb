@@ -5,7 +5,7 @@
             <strong> Protocolos cadastrados </strong>
         </div>
         <div class="panel-body">
-            <% if !@protocols.any? %>
+            <% if !@users_protocols.any? %>
                 <p> Usuário não possui nenhum protocolo cadastrado. </p>
             <% else %>
                 <div class="panel panel-default">
@@ -18,11 +18,11 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <% @protocols.each do |protocol| %>
+                        <% @users_protocols.each do |user_protocol| %>
                             <tr>
-                                <td><%= link_to protocol.title, protocol %></td>
-                                <td><%= (protocol.created_at.to_s[0..10]) %></td>
-                                <td><%= protocol.id %></td>
+                                <td><%= link_to user_protocol.protocol.title, user_protocol.protocol %></td>
+                                <td><%= (user_protocol.protocol.created_at.to_s[0..10]) %></td>
+                                <td><%= user_protocol.role.name %></td>
                             </tr>
                         <% end %>
                         </tbody>
