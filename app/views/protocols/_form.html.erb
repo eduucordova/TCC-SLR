@@ -1,219 +1,203 @@
 <%= form_for(@protocol) do |f| %>
     <% if @protocol.errors.any? %>
         <div id="error_explanation">
-            <h2><%= pluralize(@protocol.errors.count, "error") %> prohibited this protocol from being saved:</h2>
+          <h2><%= pluralize(@protocol.errors.count, "error") %> prohibited this protocol from being saved:</h2>
 
-            <ul>
-                <% @protocol.errors.full_messages.each do |message| %>
-                    <li><%= message %></li>
-                <% end %>
-            </ul>
+          <ul>
+            <% @protocol.errors.full_messages.each do |message| %>
+                <li><%= message %></li>
+            <% end %>
+          </ul>
         </div>
     <% end %>
 
     <div class="panel panel-default">
-        <div class="panel-body">
-            <div class="panel panel-default" align="left"><b> Título </b>
-                <div class="panel-body">
-                    <div class="form-group">
-                        <%= f.text_field :title, class: "form-control", placeholder: "Protocolo Exemplo" %>
-                    </div>
-                </div>
+      <div class="panel-body">
+        <div class="panel panel-default" align="left"><b> Título </b>
+          <div class="panel-body">
+            <div class="form-group">
+              <%= f.text_field :title, class: "form-control", placeholder: "Protocolo Exemplo" %>
             </div>
-            <div class="panel panel-default" align="left"><b> Contextualização </b>
-                <div class="panel-body">
-                    <div class="form-group">
-                        <%= f.text_area :background, rows: "10", class: "form-control",
-                                        placeholder: 'Exemplo: O propósito do estudo descrito neste protocolo é revisar o estado atual do Evidence-based Software Engineering (EBSE) desde 2004 utilizando a revisão de artigos relacionados com EBSE e que descrevam revisões sistemáticas da literatira (SLRs).'
-                        %>
-                    </div>
-                </div>
+          </div>
+        </div>
+        <div class="panel panel-default" align="left"><b> Contextualização </b>
+          <div class="panel-body">
+            <div class="form-group">
+              <%= f.text_area :background, rows: "10", class: "form-control",
+                              placeholder: 'Exemplo: O propósito do estudo descrito neste protocolo é revisar o estado atual do Evidence-based Software Engineering (EBSE) desde 2004 utilizando a revisão de artigos relacionados com EBSE e que descrevam revisões sistemáticas da literatira (SLRs).'
+              %>
             </div>
+          </div>
+        </div>
 
-            <div class="panel panel-default" align="left"><b> Pergunta de Pesquisa </b>
-                <div class="panel-body">
-                    <div class="form-group">
-                        <%= f.text_area :research_question, rows: '4', class: "form-control",
-                                        placeholder:
-                                            'Exemplo: As perguntas de pesquisa a serem respondidas neste estudo são:
+        <div class="panel panel-default" align="left"><b> Pergunta de Pesquisa </b>
+          <div class="panel-body">
+            <div class="form-group">
+              <%= f.text_area :research_question, rows: '4', class: "form-control",
+                              placeholder:
+                                  'Exemplo: As perguntas de pesquisa a serem respondidas neste estudo são:
 - Quantos tópicos de pesquisa estão sendo abordados?
 - Quem está liderando as pesquisas EBSE?
 - Quais são as limitações da pesquisa atual?'
-                        %>
-                    </div>
-                </div>
+              %>
             </div>
-            <div class="panel panel-default" align="left"><b> Estratégia de busca </b>
-                <div class="panel-body">
-                    <div class="form-group">
-                        <%= f.label :descrição %><br>
-                        <%= f.text_area :strategy, rows: "5", class: "form-control",
-                                        placeholder:
-                                            'Exemplo: O processo de busca será feito através da pesquisa em artigos publicados em conferências e journal desde 2004.'
-                        %>
-                        <br>
-                        <%= f.label :ano_de_publicação %><br>
-                        <div class="container-fluid">
-                            <table>
-                                <tr>
-                                    <td>
-                                        De: <%= f.select(:from, options_for_select(
-                                        [[2017], [2016], [2015], [2014], [2013], [2012], [2011],[2010], [2009], [2008], [2007],
-                                         [2006], [2005], [2004], [2003], [2002], [2001],[2000], [1999], [1998], [1997], [1996],
-                                         [1995], [1994], [1993], [1992], [1991],[1990], [1989], [1988], [1987], [1986], [1985],
-                                         [1984], [1983], [1982], [1981],[1980], [1970], [1960], [1950], [1940]
-                                        ], @protocol.from))
-                                    %>
-                                    </td>
-                                    <td>  </td>
-                                    <td>
-                                        &nbsp Até: <%= f.select(:to, options_for_select(
-                                        [[2017], [2016], [2015], [2014], [2013], [2012], [2011],[2010], [2009], [2008], [2007],
-                                         [2006], [2005], [2004], [2003], [2002], [2001],[2000], [1999], [1998], [1997], [1996],
-                                         [1995], [1994], [1993], [1992], [1991],[1990], [1989], [1988], [1987], [1986], [1985],
-                                         [1984], [1983], [1982], [1981],[1980], [1970], [1960], [1950], [1940]
-                                        ], @protocol.to))
-                                    %>
-                                    </td>
-                                </tr>
-                            </table>
+          </div>
+        </div>
+        <div class="panel panel-default" align="left"><b> Estratégia de busca </b>
+          <div class="panel-body">
+            <div class="form-group">
+              <%= f.label :descrição %><br>
+              <%= f.text_area :strategy, rows: "5", class: "form-control",
+                              placeholder:
+                                  'Exemplo: O processo de busca será feito através da pesquisa em artigos publicados em conferências e journal desde 2004.'
+              %>
+              <br>
+              <%= f.label :ano_de_publicação %><br>
+              <div class="container-fluid">
+                <table>
+                  <tr>
+                    <td>
+                      De: <%= f.select(:from, options_for_select(
+                        [[2017], [2016], [2015], [2014], [2013], [2012], [2011],[2010], [2009], [2008], [2007],
+                         [2006], [2005], [2004], [2003], [2002], [2001],[2000], [1999], [1998], [1997], [1996],
+                         [1995], [1994], [1993], [1992], [1991],[1990], [1989], [1988], [1987], [1986], [1985],
+                         [1984], [1983], [1982], [1981],[1980], [1970], [1960], [1950], [1940]
+                        ], @protocol.from))
+                    %>
+                    </td>
+                    <td>  </td>
+                    <td>
+                      &nbsp Até: <%= f.select(:to, options_for_select(
+                        [[2017], [2016], [2015], [2014], [2013], [2012], [2011],[2010], [2009], [2008], [2007],
+                         [2006], [2005], [2004], [2003], [2002], [2001],[2000], [1999], [1998], [1997], [1996],
+                         [1995], [1994], [1993], [1992], [1991],[1990], [1989], [1988], [1987], [1986], [1985],
+                         [1984], [1983], [1982], [1981],[1980], [1970], [1960], [1950], [1940]
+                        ], @protocol.to))
+                    %>
+                    </td>
+                  </tr>
+                </table>
 
-                            <br>
-                        </div>
+                <br>
+              </div>
 
-                        <%= f.label :bases_digitais %> <br>
-                        <p id="terms"> &nbsp; Algumas bases possuem limitação em relação a quantidade máxima de termos. </p>
-                        <div class="container-fluid">
-                            <%= f.check_box :ieee, {:checked=> @protocol.ieee} %> IEEE Xplore <i id="terms"> (9 termos) </i> <br>
-                            <%= f.check_box :science_direct, {:checked=> @protocol.science_direct} %> Science Direct <i id="terms">(14 termos) </i> <br>
-                            <%= f.check_box :scopus, {:checked=> @protocol.scopus} %> Scopus  <i id="terms">(14 termos) </i> <br>
-                            <%= f.check_box :acm, {:checked=> @protocol.acm} %> ACM Digital Library  <i id="terms"> (Não especificado) </i> <br>
-                            <%= f.check_box :springer, {:checked=> @protocol.springer} %> Springer Digital Library <i id="terms"> (Não especificado) </i>  <br>
-                        </div>
-                        <br>
+              <%= f.label :bases_digitais %> <br>
+              <p id="terms"> &nbsp; Algumas bases possuem limitação em relação a quantidade máxima de termos. </p>
+              <div class="container-fluid">
+                <%= f.check_box :ieee, {:checked=> @protocol.ieee} %> IEEE Xplore <i id="terms"> (9 termos) </i> <br>
+                <%= f.check_box :science_direct, {:checked=> @protocol.science_direct} %> Science Direct <i id="terms">(14 termos) </i> <br>
+                <%= f.check_box :scopus, {:checked=> @protocol.scopus} %> Scopus  <i id="terms">(14 termos) </i> <br>
+                <%= f.check_box :acm, {:checked=> @protocol.acm} %> ACM Digital Library  <i id="terms"> (Não especificado) </i> <br>
+                <%= f.check_box :springer, {:checked=> @protocol.springer} %> Springer Digital Library <i id="terms"> (Não especificado) </i>  <br>
+              </div>
+              <br>
 
-                        <strong> Nº máximo de resultados de busca retornados por base </strong><br><br>
-                        <div class="container-fluid">
-                            Nº máximo: <%= f.select(:results_returned, options_for_select([[100], [80], [60], [40], [20]], @protocol.results_returned)) %>
-                        </div>
+              <strong> Nº máximo de resultados de busca retornados por base </strong><br><br>
+              <div class="container-fluid">
+                Nº máximo: <%= f.select(:results_returned, options_for_select([[100], [80], [60], [40], [20]], @protocol.results_returned)) %>
+              </div>
 
-                    </div>
-                </div>
             </div>
-            <div class="panel panel-default" align="left"><b> Critérios de Inclusão/Exclusão </b>
-                <div class="panel-body">
-                    <div class="form-group">
-                        <%= f.text_area :criteria, rows: "10", class: "form-control",
-                                        placeholder:
-                                            'Exemplo: Artigos relacionados aos seguintes tópico, publicados entre 1º de Janeiro de 2004 e 30 de Junho de 2007 serão incluídos:
+          </div>
+        </div>
+        <div class="panel panel-default" align="left"><b> Critérios de Inclusão/Exclusão </b>
+          <div class="panel-body">
+            <div class="form-group">
+              <%= f.text_area :criteria, rows: "10", class: "form-control",
+                              placeholder:
+                                  'Exemplo: Artigos relacionados aos seguintes tópico, publicados entre 1º de Janeiro de 2004 e 30 de Junho de 2007 serão incluídos:
 - Systematic Literature Reviews (SLRs);
 - Meta-analyses (MA).
 Os seguintes tipos de trabalhos serão excluídos:
 - Survey informal da literatura (que não definam pergunta de pesquisa, estratégia de busca, etc.)'
-                        %>
-                    </div>
-                </div>
+              %>
             </div>
-
-
-            <div class="panel panel-default" align="left"><b> String de busca </b>
-                <table class="table">
-                    <tr>
-                        <th>  </th>
-                        <th> Termos </th>
-                        <th>  </th>
-                        <th>  </th>
-                        <th>  </th>
-                        <th>  </th>
-                        <th>  </th>
-                        <th>  </th>
-                        <th>  </th>
-                        <th> Sinônimos </th>
-                        <th>  </th>
-                        <th>  </th>
-                        <th>  </th>
-                        <th>  </th>
-                        <th>  </th>
-                        <th> Tradução (Inglês) </th>
-                    </tr>
-                </table>
-                <div>
-                    <%= f.fields_for :terms do |builder| %>
-                        <%= render 'term_fields', :f => builder %>
-                    <% end %>
-                </div>
-                <div class="alert alert-warning alert-dismissible" role="alert">
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <strong>Atenção!</strong> Não utilizar acentuação nos termos, sinônimos e traduções
-                </div>
-                <div id="paging_termos">
-                    <%= link_to_add_fields (button_to "Adicionar termos", class: "btn btn-primary" ), f, :terms %>
-                </div>
-            </div>
-            <br>
-
-            <div class="panel panel-default" align="left"><b> Critérios de Qualidade </b>
-                <div class="panel-body">
-                    <div class="form-group">
-                        <%= f.text_area :quality, rows: "10", class: "form-control",
-                                        placeholder:
-                                            'Exemplo: Artigos que abordem o processo de SLR mas não sejam relacionados com a Engenharia de Software serão excluídos.'
-                        %>
-                    </div>
-                </div>
-            </div>
-
-            <div class="panel panel-default" align="left"><b> Convidar Parceiros </b>
-                <div class="panel-body">
-                    <div class="form-group">
-                        <table class="table table-striped table-bordered">
-                            <thead>
-                            <tr>
-                                <th>Usuário</th>
-                                <th>Papel</th>
-                                <th></th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <%= f.fields_for :users_protocols do |ff| %>
-                                <tr>
-                                    <td><%= ff.object.user.username %></td>
-                                    <td><%= ff.object.role.name %></td>
-                                </tr>
-                            <% end %>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div class="form-group">
-                        <table>
-                            <tr>
-                                <td>
-                                    <%= f.label :usuário %>
-                                </td>
-                                <td>
-                                    <%= f.label :papel %>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <%= f.collection_select(:user_ids, User.all, :id, :username, { include_blank: true}) %>
-                                </td>
-                                <td>
-                                    <%= f.collection_select(:user_ids, Role.all, :id, :name, { include_blank: true}) %>
-                                </td>
-                                <td>
-                                    <%= button_to 'Adicionar parceiro', {}, {id: 'btnTeste'} %>
-                                </td>
-                            </tr>
-                        </table>
-                    </div>
-                </div>
-            </div>
-
-            <div class="form-group">
-                <%= f.submit "Submit", class: "btn btn-primary" %>
-            </div>
+          </div>
         </div>
+
+
+        <div class="panel panel-default" align="left"><b> String de busca </b>
+          <table class="table">
+            <tr>
+              <th>  </th>
+              <th> Termos </th>
+              <th>  </th>
+              <th>  </th>
+              <th>  </th>
+              <th>  </th>
+              <th>  </th>
+              <th>  </th>
+              <th>  </th>
+              <th> Sinônimos </th>
+              <th>  </th>
+              <th>  </th>
+              <th>  </th>
+              <th>  </th>
+              <th>  </th>
+              <th> Tradução (Inglês) </th>
+            </tr>
+          </table>
+          <div>
+            <%= f.fields_for :terms do |builder| %>
+                <%= render 'term_fields', :f => builder %>
+            <% end %>
+          </div>
+          <div class="alert alert-warning alert-dismissible" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <strong>Atenção!</strong> Não utilizar acentuação nos termos, sinônimos e traduções
+          </div>
+          <div id="paging_termos">
+            <%= link_to_add_fields (button_to "Adicionar termos", class: "btn btn-primary" ), f, :terms %>
+          </div>
+        </div>
+        <br>
+
+        <div class="panel panel-default" align="left"><b> Critérios de Qualidade </b>
+          <div class="panel-body">
+            <div class="form-group">
+              <%= f.text_area :quality, rows: "10", class: "form-control",
+                              placeholder:
+                                  'Exemplo: Artigos que abordem o processo de SLR mas não sejam relacionados com a Engenharia de Software serão excluídos.'
+              %>
+            </div>
+          </div>
+        </div>
+
+        <div class="panel panel-default" align="left"><b> Adicionar parceiros </b>
+          <table class="table">
+            <tr>
+              <th>Usuário</th>
+              <th>Papel</th>
+              <th></th>
+              <th></th>
+              <th></th>
+              <th></th>
+              <th></th>
+              <th></th>
+              <th></th>
+              <th></th>
+              <th></th>
+              <th></th>
+              <th></th>
+            </tr>
+          </table>
+          <div>
+            <%= f.fields_for :users_protocols do |builder| %>
+                <%= render 'users_protocol_fields', :f => builder %>
+            <% end %>
+          </div>
+          <br>
+          <br>
+          <div id="paging_termos">
+            <%= link_to_add_fields (button_to 'Adicionar parceiro', class: 'btn btn-primary' ), f, :users_protocols %>
+          </div>
+        </div>
+
+
+        <div class="form-group">
+          <%= f.submit "Submit", class: "btn btn-primary" %>
+        </div>
+      </div>
     </div>
 
 <% end %>
