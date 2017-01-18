@@ -281,7 +281,7 @@ class ProtocolsController < ApplicationController
   def protocol_params
     params.require(:protocol).permit(:id, :title, :background, :research_question, :strategy, :criteria, :from, :to, :results_returned,
                                      :ieee, :acm, :springer, :science_direct, :google_scholar, :scopus, :quality,
-                                     :users_protocols_attributes => [:user_id, :role_id],
+                                     :users_protocols_attributes => [:id, :user_id, :role_id],
                                      :terms_attributes => [:id, :termo, :sinonimo, :sinonimo2, :sinonimo3, :traducao, :traducao2, :traducao3])
   end
 
