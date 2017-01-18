@@ -16,6 +16,8 @@ class ProtocolsController < ApplicationController
   # GET /protocols/1
   # GET /protocols/1.json
   def show
+    @role = @protocol.users_protocols.select(:role_id).where(user: current_user)
+    byebug
   end
 
   # GET /protocols/new
