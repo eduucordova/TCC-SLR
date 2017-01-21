@@ -57,7 +57,7 @@
             <% end %>
           </ul><br>
 
-          <b> Termos de Busca: </b><br><br>
+          <b> Termos de Busca: </b><br/><br/>
           <div class="container-fluid">
             <table class="table table-bordered">
               <thead>
@@ -110,10 +110,31 @@
               <% end %>
               </table>
           </div>
+
+          <b> Participantes: </b><br/><br/>
+          <div class="container-fluid">
+            <table class="table table-bordered">
+              <thead>
+              <tr>
+                <th>Nome</th>
+                <th>Papel</th>
+              </tr>
+              </thead>
+              <tbody>
+            <% @users_protocols.each do |user_protocol| %>
+              <tr>
+                <td><%= user_protocol.user.username %></td>
+                <td><%= user_protocol.role.name %></td>
+              </tr>
+            <% end %>
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
     </div>
   </div>
+
   <div class="btn-group">
 
     <%= link_to protocols_path, class: "btn btn-default" do %>
@@ -121,11 +142,11 @@
         Voltar
     <% end %>
 
-    <%= link_to @protocol, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-default" do %>
-        <span class="glyphicon glyphicon-trash"></span>
-        Deletar
-    <% end %>
     <% if @role == 1 %>
+        <%= link_to @protocol, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-default" do %>
+            <span class="glyphicon glyphicon-trash"></span>
+            Deletar
+        <% end %>
         <%= link_to edit_protocol_path(@protocol), class: "btn btn-default" do %>
             <span class="glyphicon glyphicon-edit"></span>
             Editar

@@ -21,10 +21,16 @@ $(document).ready(function () {
         var content = $(this).data("content");
         add_fields(link, association, content);
     });
+
+    $("a.link_to_remove_fields").on("click", function (e) {
+        e.preventDefault();
+        var link = $(this);
+        remove_fields(link);
+    });
 });
 
 function remove_fields (link) {
-    $(link).prev("input[type=hidden]").value = "1";
+    $(link).prev("input[type=hidden]").val(true);
     $(link).closest(".fields").hide();
 }
 

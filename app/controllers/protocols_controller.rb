@@ -16,8 +16,11 @@ class ProtocolsController < ApplicationController
   # GET /protocols/1
   # GET /protocols/1.json
   def show
-    @role = @protocol.users_protocols.select(:role_id).where(user: current_user)
-    byebug
+    @role = @protocol.users_protocols.select(:role_id).where(user: current_user).first.role_id
+    @users_protocols = @protocol.users_protocols.includes(:user).each do |user_protocol|
+      puts user_protocol.role.name
+      puts user_protocol.user.username
+    end
   end
 
   # GET /protocols/new
@@ -277,12 +280,13 @@ class ProtocolsController < ApplicationController
     @protocol = Protocol.find(params[:id])
   end
 
+
   # Never trust parameters from the scary internet, only allow the white list through.
   def protocol_params
     params.require(:protocol).permit(:id, :title, :background, :research_question, :strategy, :criteria, :from, :to, :results_returned,
                                      :ieee, :acm, :springer, :science_direct, :google_scholar, :scopus, :quality,
-                                     :users_protocols_attributes => [:id, :user_id, :role_id],
-                                     :terms_attributes => [:id, :termo, :sinonimo, :sinonimo2, :sinonimo3, :traducao, :traducao2, :traducao3])
+                                     :users_protocols_attributes => [:id, :user_id, :role_id, :_destroy],
+                                     :terms_attributes => [:id, :termo, :sinonimo, :sinonimo2, :sinonimo3, :traducao, :traducao2, :traducao3, :_destroy])
   end
 
   # Verifica se alguma busca já foi realizada para aquele protocolo
