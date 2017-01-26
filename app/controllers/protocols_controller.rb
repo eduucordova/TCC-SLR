@@ -4,18 +4,32 @@ class ProtocolsController < ApplicationController
   # GET /protocols
   # GET /protocols.json
   def index
-    @protocols = Protocol.all
+    if !current_user.nil?
+      @users_protocols = current_user.users_protocols.includes(:protocol).each do |user_protocol|
+        puts user_protocol.role.name
+        puts user_protocol.protocol.title
+        puts user_protocol.protocol.created_at
+      end
+    end
   end
 
   # GET /protocols/1
   # GET /protocols/1.json
   def show
+    @role = @protocol.users_protocols.select(:role_id).where(user: current_user).first.role_id
+    @users_protocols = @protocol.users_protocols.includes(:user).each do |user_protocol|
+      puts user_protocol.role.name
+      puts user_protocol.user.username
+    end
   end
 
   # GET /protocols/new
   def new
+    @all_roles = Role.all
     @protocol = current_user.protocols.build
+
     1.times { @protocol.terms.build }
+    1.times { @protocol.users_protocols.build({ user_id: current_user.id, role_id: 1 }) }
 
     @protocol.ieee = true
     @protocol.science_direct = true
@@ -23,11 +37,12 @@ class ProtocolsController < ApplicationController
     @protocol.acm = true
     @protocol.springer = true
     @protocol.from = 2005
-    @protocol.to = 2015
+    @protocol.to = 2017
   end
 
   # GET /protocols/1/edit
   def edit
+    @all_roles = Role.all
   end
 
   # POST /protocols
@@ -260,21 +275,23 @@ class ProtocolsController < ApplicationController
 
   private
 
-    # Use callbacks to share common setup or constraints between actions.
-    def set_protocol
-      @protocol = Protocol.find(params[:id])
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_protocol
+    @protocol = Protocol.find(params[:id])
+  end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def protocol_params
-      params.require(:protocol).permit(:id, :title, :background, :research_question, :strategy, :criteria, :from, :to, :results_returned,
-                                       :ieee, :acm, :springer, :science_direct, :google_scholar, :scopus, :quality,
-                                       :terms_attributes => [:id, :termo, :sinonimo, :sinonimo2, :sinonimo3, :traducao, :traducao2, :traducao3])
-    end
 
-    # Verifica se alguma busca já foi realizada para aquele protocolo
-    def reference_exist
-      Reference.find_by_protocol_id(params[:id])
-    end
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def protocol_params
+    params.require(:protocol).permit(:id, :title, :background, :research_question, :strategy, :criteria, :from, :to, :results_returned,
+                                     :ieee, :acm, :springer, :science_direct, :google_scholar, :scopus, :quality,
+                                     :users_protocols_attributes => [:id, :user_id, :role_id, :_destroy],
+                                     :terms_attributes => [:id, :termo, :sinonimo, :sinonimo2, :sinonimo3, :traducao, :traducao2, :traducao3, :_destroy])
+  end
+
+  # Verifica se alguma busca já foi realizada para aquele protocolo
+  def reference_exist
+    Reference.find_by_protocol_id(params[:id])
+  end
 
 end

@@ -1,19 +1,26 @@
 <div class="fields">
   <table class="table">
-      <tr>
-          <td>
-            <%= f.hidden_field :termo %>
-            <%= f.text_field :termo, placeholder: 'revisao sistematica da literatura' %>
-          </td>
-          <td>  </td>
-          <td>
-          </td>
-          <td> OR </td>
-          <td>
-            <%= f.hidden_field :traducao %>
-            <%= f.text_field :traducao, placeholder: 'systematic literature review' %>
-          </td>
-      </tr>
+    <tr>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td><%= link_to_remove_fields 'x', f, :class => "link_to_remove_fields close" %></td>
+    </tr>
+    <tr>
+      <td>
+        <%= f.hidden_field :termo %>
+        <%= f.text_field :termo, placeholder: 'revisao sistematica da literatura' %>
+      </td>
+      <td>  </td>
+      <td>
+      </td>
+      <td> OR </td>
+      <td>
+        <%= f.hidden_field :traducao %>
+        <%= f.text_field :traducao, placeholder: 'systematic literature review' %>
+      </td>
+    </tr>
     <tr>
       <td></td>
       <td></td>
@@ -27,7 +34,6 @@
         <%= f.text_field :traducao2, placeholder: 'systematic review' %>
       </td>
     </tr>
-
     <tr>
       <td>
       </td>

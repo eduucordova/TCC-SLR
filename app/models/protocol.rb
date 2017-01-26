@@ -1,10 +1,12 @@
 class Protocol < ActiveRecord::Base
 
-  belongs_to :user
+  has_many :users_protocols, dependent: :destroy
+  has_many :users, through: :users_protocols
   has_many :terms, :dependent => :destroy
   has_many :references
   accepts_nested_attributes_for :terms, :allow_destroy => true
-  validates_presence_of :title, :background, :research_question, :strategy, :terms, :from, :to, :quality
+  accepts_nested_attributes_for :users_protocols, :allow_destroy => true
+  validates_presence_of :title, :background, :research_question, :strategy, :terms, :from, :to, :quality, :users
 
   def clean_bases (protocol_id)
 
