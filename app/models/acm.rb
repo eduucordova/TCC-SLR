@@ -1,12 +1,17 @@
 class Acm < ActiveRecord::Base
 
+
   def search(query, protocol_id, max_results, from, to)
 
     max = max_results.to_f / 20
 
     j = 0
 
-    doc = Nokogiri::HTML(open("http://dl.acm.org/results.cfm?query=" + query + "&since_year=" + from + "&before_year=" + to))
+    require 'open-uri'
+
+    url = 'http://dl.acm.org/results.cfm?query=' + query + '&since_year=' + from + '&before_year=' + to
+
+    doc = Nokogiri::HTML(open(url, 'User-Agent' => 'firefox'))
 
     total = doc.css("#resfound").first.text
 
@@ -25,7 +30,7 @@ class Acm < ActiveRecord::Base
 
         search_query = "http://dl.acm.org/results.cfm?query=" + query + "&start=" + j.to_s + "&since_year=" + from + "&before_year=" + to
 
-        doc = Nokogiri::HTML(open(search_query))
+        doc = Nokogiri::HTML(open(search_query, 'User-Agent' => 'firefox'))
 
         results = doc.css("#results").css("div.details")
 
