@@ -35,7 +35,12 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :references
+  resources :references do
+    collection do
+      post 'distribute'
+    end
+  end
+
   resources :protocols do
     member do
       # Using member you create a route for that specific protocol, e.g. 'protocols/5/search'
@@ -44,6 +49,7 @@ Rails.application.routes.draw do
       post 'do_search'
       get 'selected'
       get 'included'
+      get 'distribute_studies', to: 'references#distribute_studies'
     end
   end
 

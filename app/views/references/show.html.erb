@@ -124,3 +124,23 @@
     </table>
   </div>
 </div>
+
+  <%= link_to 'Distribuir',
+              distribute_studies_protocol_path,
+              {
+                :remote => true,
+                'data-toggle' =>  'modal',
+                'data-target' => '#distribute_studies',
+                :class => 'btn btn-primary ', 'data-type' => 'html'
+              }
+  %>
+<!-- Modal -->
+<div class="modal fade" id="distribute_studies">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <%= render partial: 'distribute_studies' %>
+    </div>
+  </div>
+</div>
+<!-- End of Modal -->
+</div>

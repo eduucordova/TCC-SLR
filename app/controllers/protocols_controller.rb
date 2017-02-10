@@ -25,7 +25,6 @@ class ProtocolsController < ApplicationController
 
   # GET /protocols/new
   def new
-    @all_roles = Role.all
     @protocol = current_user.protocols.build
 
     1.times { @protocol.terms.build }
@@ -36,13 +35,12 @@ class ProtocolsController < ApplicationController
     @protocol.scopus = true
     @protocol.acm = true
     @protocol.springer = true
-    @protocol.from = 2005
+    @protocol.from = 2007
     @protocol.to = 2017
   end
 
   # GET /protocols/1/edit
   def edit
-    @all_roles = Role.all
   end
 
   # POST /protocols

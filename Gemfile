@@ -31,7 +31,8 @@ gem 'execjs'
 gem 'therubyracer'
 
 # adding bootstrap
-gem 'bootstrap-sass', '~> 3.3.5'
+gem 'bootstrap-sass', '~> 3.3.7'
+gem 'bootstrap-slider-rails'
 
 # authentication for users
 gem 'devise', '~> 3.5.1'

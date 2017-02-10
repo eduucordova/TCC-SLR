@@ -1,8 +1,12 @@
+require 'open-uri'
+
 class Scopu < ActiveRecord::Base
 
   def search(query, protocol_id, max_returned, from, to)
 
-    doc = Nokogiri::XML(open('http://api.elsevier.com/content/search/scopus?apikey=6d0f623f9844b5c1f1e9f4eeb2ee270a&httpAccept=application%2Fatom%2Bxml&count=' + max_returned + '&query=' + query + '&date=' + from + '-' + to))
+    url = 'http://api.elsevier.com/content/search/scopus?apikey=6d0f623f9844b5c1f1e9f4eeb2ee270a&httpAccept=application%2Fatom%2Bxml&view=COMPLETE&count=25&query=' + query + '&date=' + from + '-' + to
+byebug
+    doc = Nokogiri::XML(open(url, 'User-Agent' => 'firefox'))
 
     doc.xpath("//opensearch:totalResults").each do |entry|
       @total_found = entry.text

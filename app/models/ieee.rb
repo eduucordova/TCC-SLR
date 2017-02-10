@@ -1,3 +1,5 @@
+require 'open-uri'
+
 class Ieee < ActiveRecord::Base
 
   def search(query, protocol_id, max_returned, from, to)

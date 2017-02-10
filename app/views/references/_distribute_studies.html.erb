@@ -1,0 +1,37 @@
+<div class="modal-header">
+  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+  <h3 id="modalLabel">Distribuir Estudos</h3>
+</div>
+<div class="modal-body">
+  <table class="table table-bordered" id="modal_table">
+    <thead>
+    <tr>
+      <th></th>
+      <th>Integrante</th>
+      <th>Papel</th>
+      <th>Distribuição</th>
+    </tr>
+    </thead>
+    <tbody>
+    <% @users_protocols_range.each do |user_protocol| %>
+        <tr>
+          <td><%= user_protocol.id %></td>
+          <td><%= user_protocol.user.username %></td>
+          <td><%= user_protocol.role.name %></td>
+          <td>
+            &nbsp;
+            <span class="range-content">
+                <input type="range" data-slider-min="0" data-slider-max="100" data-slider-step="1" data-slider-value="100"/>
+                &nbsp;&nbsp;<span>100</span>
+              </span>
+            <span>%</span>
+          </td>
+        </tr>
+    <% end %>
+    </tbody>
+  </table>
+</div>
+<div class="modal-footer">
+  <button class="btn" data-dismiss="modal" aria-hidden="true">Fechar</button>
+  <button id="btnDistribute" class="btn btn-primary">Distribuir</button>
+</div>

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170112120932) do
+ActiveRecord::Schema.define(version: 20170126130950) do
 
   create_table "acms", force: :cascade do |t|
     t.text     "abstract",       limit: 65535
@@ -29,6 +29,15 @@ ActiveRecord::Schema.define(version: 20170112120932) do
     t.integer  "protocol_id",    limit: 4
     t.text     "year",           limit: 65535
   end
+
+  create_table "acms_users_protocols", force: :cascade do |t|
+    t.integer "acm_id",            limit: 4
+    t.integer "users_protocol_id", limit: 4
+    t.boolean "included",          limit: 1
+  end
+
+  add_index "acms_users_protocols", ["acm_id"], name: "index_acms_users_protocols_on_acm_id", using: :btree
+  add_index "acms_users_protocols", ["users_protocol_id"], name: "index_acms_users_protocols_on_users_protocol_id", using: :btree
 
   create_table "google_scholars", force: :cascade do |t|
     t.text     "abstract",    limit: 65535
@@ -61,6 +70,15 @@ ActiveRecord::Schema.define(version: 20170112120932) do
     t.boolean  "selected",       limit: 1
     t.integer  "year",           limit: 4
   end
+
+  create_table "ieees_users_protocols", force: :cascade do |t|
+    t.integer "ieee_id",           limit: 4
+    t.integer "users_protocol_id", limit: 4
+    t.boolean "included",          limit: 1
+  end
+
+  add_index "ieees_users_protocols", ["ieee_id"], name: "index_ieees_users_protocols_on_ieee_id", using: :btree
+  add_index "ieees_users_protocols", ["users_protocol_id"], name: "index_ieees_users_protocols_on_users_protocol_id", using: :btree
 
   create_table "includeds", force: :cascade do |t|
     t.string   "title",         limit: 255
@@ -129,6 +147,15 @@ ActiveRecord::Schema.define(version: 20170112120932) do
     t.integer  "year",           limit: 4
   end
 
+  create_table "scidirs_users_protocols", force: :cascade do |t|
+    t.integer "scidir_id",         limit: 4
+    t.integer "users_protocol_id", limit: 4
+    t.boolean "included",          limit: 1
+  end
+
+  add_index "scidirs_users_protocols", ["scidir_id"], name: "index_scidirs_users_protocols_on_scidir_id", using: :btree
+  add_index "scidirs_users_protocols", ["users_protocol_id"], name: "index_scidirs_users_protocols_on_users_protocol_id", using: :btree
+
   create_table "scopus", force: :cascade do |t|
     t.text     "abstract",            limit: 65535
     t.string   "author",              limit: 255
@@ -146,6 +173,15 @@ ActiveRecord::Schema.define(version: 20170112120932) do
     t.integer  "year",                limit: 4
   end
 
+  create_table "scopus_users_protocols", force: :cascade do |t|
+    t.integer "scopu_id",          limit: 4
+    t.integer "users_protocol_id", limit: 4
+    t.boolean "included",          limit: 1
+  end
+
+  add_index "scopus_users_protocols", ["scopu_id"], name: "index_scopus_users_protocols_on_scopu_id", using: :btree
+  add_index "scopus_users_protocols", ["users_protocol_id"], name: "index_scopus_users_protocols_on_users_protocol_id", using: :btree
+
   create_table "springers", force: :cascade do |t|
     t.text     "abstract",    limit: 65535
     t.string   "author",      limit: 255
@@ -161,6 +197,15 @@ ActiveRecord::Schema.define(version: 20170112120932) do
     t.datetime "updated_at",                null: false
     t.integer  "year",        limit: 4
   end
+
+  create_table "springers_users_protocols", force: :cascade do |t|
+    t.integer "springer_id",       limit: 4
+    t.integer "users_protocol_id", limit: 4
+    t.boolean "included",          limit: 1
+  end
+
+  add_index "springers_users_protocols", ["springer_id"], name: "index_springers_users_protocols_on_springer_id", using: :btree
+  add_index "springers_users_protocols", ["users_protocol_id"], name: "index_springers_users_protocols_on_users_protocol_id", using: :btree
 
   create_table "terms", force: :cascade do |t|
     t.string   "termo",       limit: 255
@@ -212,6 +257,16 @@ ActiveRecord::Schema.define(version: 20170112120932) do
   add_index "users_protocols", ["role_id"], name: "index_users_protocols_on_role_id", using: :btree
   add_index "users_protocols", ["user_id"], name: "index_users_protocols_on_user_id", using: :btree
 
+  add_foreign_key "acms_users_protocols", "acms"
+  add_foreign_key "acms_users_protocols", "users_protocols"
+  add_foreign_key "ieees_users_protocols", "ieees"
+  add_foreign_key "ieees_users_protocols", "users_protocols"
+  add_foreign_key "scidirs_users_protocols", "scidirs"
+  add_foreign_key "scidirs_users_protocols", "users_protocols"
+  add_foreign_key "scopus_users_protocols", "scopus"
+  add_foreign_key "scopus_users_protocols", "users_protocols"
+  add_foreign_key "springers_users_protocols", "springers"
+  add_foreign_key "springers_users_protocols", "users_protocols"
   add_foreign_key "users_protocols", "protocols"
   add_foreign_key "users_protocols", "roles"
   add_foreign_key "users_protocols", "users"

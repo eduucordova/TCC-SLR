@@ -1,8 +1,12 @@
+require 'open-uri'
+
 class Springer < ActiveRecord::Base
 
   def search(query, protocol_id, max_returned, from, to)
 
-    doc = Nokogiri::XML(open('http://api.springer.com/metadata/pam?api_key=df81deec5097211838ef3a07c91c02d2&q=year:' + to + '&q=' + query + '&p=' + max_returned))
+    url = 'http://api.springer.com/metadata/pam?api_key=df81deec5097211838ef3a07c91c02d2&q=year:' + to + '&q=' + query + '&p=' + max_returned
+
+    doc = Nokogiri::XML(open(url, 'User-Agent' => 'firefox'))
 
     doc.xpath("//response//result/*").each do|entry|
       if entry.name == 'total'

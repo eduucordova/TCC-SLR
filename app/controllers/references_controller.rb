@@ -10,7 +10,13 @@ class ReferencesController < ApplicationController
   # GET /references/1
   # GET /references/1.json
   def show
-    @reference = Reference.where("protocol_id = ?", params[:id])
+    @users_protocols_range = Protocol.find(params[:id]).users_protocols.includes(:user).each do |user_protocol|
+      puts user_protocol.id
+      puts user_protocol.role.name
+      puts user_protocol.user.username
+    end
+
+    @reference = Reference.where('protocol_id = ?', params[:id])
   end
 
   # GET /references/new
@@ -20,6 +26,57 @@ class ReferencesController < ApplicationController
 
   # GET /references/1/edit
   def edit
+  end
+
+  def distribute_studies
+    @users_protocols_range = Protocol.find(params[:id]).users_protocols.includes(:user).each do |user_protocol|
+      puts user_protocol.id
+      puts user_protocol.role.name
+      puts user_protocol.user.username
+    end
+    respond_to do |format|
+      format.html { render :partial => 'distribute_studies' }
+      format.json
+    end
+  end
+
+  def distribute
+    # Ugliest way to parse data from server
+    params.first[1].first.first.split(',').each do |user_range|
+      if user_range.include? 'user_id'
+        @userProtocolId = user_range.scan(/\d+/).first
+        @range = nil
+        if @protocol.nil?
+          @protocol = UsersProtocol.find(@userProtocolId).protocol
+        end
+      else
+        @range = user_range.scan(/\d+/).first
+      end
+
+      if !@userProtocolId.nil? && !@range.nil?
+        if @protocol.ieee
+          # IeeesUsersProtocol.randomize_studies(userProtocolId, range)
+        end
+
+        if @protocol.science_direct
+          # ScidirUsersProtocol.randomize_studies(userProtocolId, range)
+        end
+
+        if @protocol.scopus
+          # ScopuUsersProtocol.randomize_studies(userProtocolId, range)
+        end
+
+        if @protocol.acm
+          # AcmUsersProtocol.randomize_studies(userProtocolId, range)
+        end
+
+        if @protocol.springer
+          # SpringerUsersProtocol.randomize_studies(userProtocolId, range)
+        end
+      end
+    end
+
+    redirect_to :back
   end
 
   private
@@ -32,4 +89,5 @@ class ReferencesController < ApplicationController
     def reference_params
       params.require(:reference).permit(:query)
     end
+
 end
