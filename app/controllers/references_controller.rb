@@ -41,6 +41,7 @@ class ReferencesController < ApplicationController
   end
 
   def distribute
+    hash = Hash.new()
     # Ugliest way to parse data from server
     params.first[1].first.first.split(',').each do |user_range|
       if user_range.include? 'user_id'
@@ -50,29 +51,23 @@ class ReferencesController < ApplicationController
           @protocol = UsersProtocol.find(@userProtocolId).protocol
         end
       else
-        @range = user_range.scan(/\d+/).first
+        @range = user_range.scan(/\d+/).first.to_i
+        byebug
+        hash[@userProtocolId] = @range
       end
 
-      if !@userProtocolId.nil? && !@range.nil?
-        if @protocol.ieee
-          # IeeesUsersProtocol.randomize_studies(userProtocolId, range)
-        end
+      ScopusUsersProtocol.randomize_studies(hash, @protocol) if @protocol.scopus?
 
-        if @protocol.science_direct
-          # ScidirUsersProtocol.randomize_studies(userProtocolId, range)
-        end
+      if !hash.empty? && false
+        IeeesUsersProtocol.randomize_studies(@userProtocolId, @range) if @protocol.ieee?
 
-        if @protocol.scopus
-          # ScopuUsersProtocol.randomize_studies(userProtocolId, range)
-        end
+        ScidirUsersProtocol.randomize_studies(@userProtocolId, @range) if @protocol.science_direct?
 
-        if @protocol.acm
-          # AcmUsersProtocol.randomize_studies(userProtocolId, range)
-        end
+        ScopusUsersProtocol.randomize_studies(@userProtocolId, @range) if @protocol.scopus?
 
-        if @protocol.springer
-          # SpringerUsersProtocol.randomize_studies(userProtocolId, range)
-        end
+        AcmUsersProtocol.randomize_studies(@userProtocolId, @range) if @protocol.acm?
+
+        SpringerUsersProtocol.randomize_studies(@userProtocolId, @range) if @protocol.springer?
       end
     end
 
@@ -80,14 +75,14 @@ class ReferencesController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_reference
-      @reference = Reference.find(params[:id])
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_reference
+    @reference = Reference.find(params[:id])
+  end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def reference_params
-      params.require(:reference).permit(:query)
-    end
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def reference_params
+    params.require(:reference).permit(:query)
+  end
 
 end
