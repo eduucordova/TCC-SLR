@@ -17,16 +17,18 @@ class ScopusUsersProtocol < ActiveRecord::Base
       user_index = user_index.modulo(user_array.count)
 
       if !user_array[user_index][0].nil?
-        study_index += 1
-        user_array[user_index][1] -= 1
-        study_index = study_index.modulo(studies.count)
-        ScopusUsersProtocol.create(:users_protocol_id => user_array[user_index][0], :scopu_id => studies[study_index].id)
         if user_array[user_index][1].zero?
           user_array[user_index][0] = nil
           stopped += 1
+        else
+          user_array[user_index][1] -= 1
+          study_index = study_index.modulo(studies.count)
+          ScopusUsersProtocol.create(:users_protocol_id => user_array[user_index][0], :scopu_id => studies[study_index].id)
+          study_index += 1
         end
       end
       user_index += 1
     end
+
   end
 end
