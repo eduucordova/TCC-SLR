@@ -1,5 +1,5 @@
 
-class AcmUsersProtocol < ActiveRecord::Base
+class ScidirsUsersProtocol < ActiveRecord::Base
 
   def self.randomize_studies (user_protocol_id, range)
 

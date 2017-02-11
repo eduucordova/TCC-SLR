@@ -61,13 +61,13 @@ class ReferencesController < ApplicationController
       if !hash.empty? && false
         IeeesUsersProtocol.randomize_studies(@userProtocolId, @range) if @protocol.ieee?
 
-        ScidirUsersProtocol.randomize_studies(@userProtocolId, @range) if @protocol.science_direct?
+        ScidirsUsersProtocol.randomize_studies(@userProtocolId, @range) if @protocol.science_direct?
 
         ScopusUsersProtocol.randomize_studies(@userProtocolId, @range) if @protocol.scopus?
 
-        AcmUsersProtocol.randomize_studies(@userProtocolId, @range) if @protocol.acm?
+        AcmsUsersProtocol.randomize_studies(@userProtocolId, @range) if @protocol.acm?
 
-        SpringerUsersProtocol.randomize_studies(@userProtocolId, @range) if @protocol.springer?
+        SpringersUsersProtocol.randomize_studies(@userProtocolId, @range) if @protocol.springer?
       end
     end
 
