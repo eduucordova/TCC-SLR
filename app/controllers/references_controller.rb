@@ -52,23 +52,20 @@ class ReferencesController < ApplicationController
         end
       else
         @range = user_range.scan(/\d+/).first.to_i
-        byebug
         hash[@userProtocolId] = @range
       end
+    end
+
+    if !hash.empty?
+      IeeesUsersProtocol.randomize_studies(@userProtocolId, @range) if @protocol.ieee?
+
+      ScidirsUsersProtocol.randomize_studies(@userProtocolId, @range) if @protocol.science_direct?
 
       ScopusUsersProtocol.randomize_studies(hash, @protocol) if @protocol.scopus?
 
-      if !hash.empty? && false
-        IeeesUsersProtocol.randomize_studies(@userProtocolId, @range) if @protocol.ieee?
+      AcmsUsersProtocol.randomize_studies(@userProtocolId, @range) if @protocol.acm?
 
-        ScidirsUsersProtocol.randomize_studies(@userProtocolId, @range) if @protocol.science_direct?
-
-        ScopusUsersProtocol.randomize_studies(@userProtocolId, @range) if @protocol.scopus?
-
-        AcmsUsersProtocol.randomize_studies(@userProtocolId, @range) if @protocol.acm?
-
-        SpringersUsersProtocol.randomize_studies(@userProtocolId, @range) if @protocol.springer?
-      end
+      SpringersUsersProtocol.randomize_studies(@userProtocolId, @range) if @protocol.springer?
     end
 
     redirect_to :back
