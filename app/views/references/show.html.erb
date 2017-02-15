@@ -13,6 +13,7 @@
         <th> Base Digital </th>
         <th> Resultado Total </th>
         <th> Resultados a serem analisados </th>
+        <th> Resultados atribuídos </th>
         <th> Data </th>
       </tr>
       <tr>
@@ -32,6 +33,9 @@
                     </td>
                     <td align="center">
                       <%= reference.results %>
+                    </td>
+                    <td align="center">
+                      <%= @scopus.count %>
                     </td>
                     <td>
                       <%= (reference.updated_at.to_s[0..10])%>
@@ -53,6 +57,9 @@
                     <td align="center">
                       <%= reference.results %>
                     </td>
+                    <td align="center">
+                    <%= @ieee.count %>
+                  </td>
                     <td>
                       <%= (reference.updated_at.to_s[0..10])%>
                     </td>
@@ -72,6 +79,9 @@
                     </td>
                     <td align="center">
                       <%= reference.results %>
+                    </td>
+                    <td align="center">
+                      <%= @scidir.count %>
                     </td>
                     <td>
                       <%= (reference.updated_at.to_s[0..10])%>
@@ -93,6 +103,9 @@
                     <td align="center">
                       <%= reference.results %>
                     </td>
+                    <td align="center">
+                      <%= @acm.count %>
+                    </td>
                     <td>
                       <%= (reference.updated_at.to_s[0..10])%>
                     </td>
@@ -112,6 +125,9 @@
                     </td>
                     <td align="center">
                       <%= reference.results %>
+                    </td>
+                    <td align="center">
+                      <%= @springer.count %>
                     </td>
                     <td>
                       <%= (reference.updated_at.to_s[0..10])%>

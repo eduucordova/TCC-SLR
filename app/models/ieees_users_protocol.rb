@@ -3,12 +3,16 @@ class IeeesUsersProtocol < ActiveRecord::Base
   # user_hash = {user_protocol_id, percentage}
   def self.randomize_studies (user_hash, protocol)
     studies = Ieee.where('protocol_id = ?', protocol.id)
+    IeeesUsersProtocol.where(ieee_id: studies).delete_all
     total = studies.count()
 
-    # change the percentage to an actual number of studies
-    user_hash.each { |key, value| user_hash[key] = (value*total*0.01).to_i }
+    # change the percentage to an actual quantity of studies
+    user_quantity = {}
+    user_hash.each do |key, value|
+      user_quantity[key] = (value*total*0.01).to_i
+    end
 
-    user_array = user_hash.to_a
+    user_array = user_quantity.to_a
 
     study_index = 0
     user_index = 0
@@ -23,7 +27,7 @@ class IeeesUsersProtocol < ActiveRecord::Base
         else
           user_array[user_index][1] -= 1
           study_index = study_index.modulo(studies.count)
-          IeeesUsersProtocol.create(:users_protocol_id => user_array[user_index][0], :scopu_id => studies[study_index].id)
+          IeeesUsersProtocol.create(:users_protocol_id => user_array[user_index][0], :ieee_id => studies[study_index].id)
           study_index += 1
         end
       end

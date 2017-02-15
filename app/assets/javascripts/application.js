@@ -76,6 +76,7 @@ $(document).ready(function () {
             },
             error: function(xhr, textStatus, errorThrown) {}
         });
+        // $('#distribute_studies').modal('hide');
     });
 });
 

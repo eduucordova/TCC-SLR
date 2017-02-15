@@ -14,7 +14,7 @@ class Protocol < ActiveRecord::Base
 
     Ieee.delete_all "protocol_id = #{protocol_id}"
     Scidir.delete_all "protocol_id = #{protocol_id}"
-    Scopu.delete_all "protocol_id = #{protocol_id}"
+    Scopu.destroy_all "protocol_id = #{protocol_id}"
     Acm.delete_all "protocol_id = #{protocol_id}"
     Springer.delete_all "protocol_id = #{protocol_id}"
 

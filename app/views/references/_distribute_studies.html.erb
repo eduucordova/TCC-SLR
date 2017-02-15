@@ -6,7 +6,6 @@
   <table class="table table-bordered" id="modal_table">
     <thead>
     <tr>
-      <th></th>
       <th>Integrante</th>
       <th>Papel</th>
       <th>Distribuição</th>
@@ -15,7 +14,7 @@
     <tbody>
     <% @users_protocols_range.each do |user_protocol| %>
         <tr>
-          <td><%= user_protocol.id %></td>
+          <td hidden><%= user_protocol.id %></td>
           <td><%= user_protocol.user.username %></td>
           <td><%= user_protocol.role.name %></td>
           <td>

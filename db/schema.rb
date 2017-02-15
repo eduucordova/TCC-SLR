@@ -257,16 +257,16 @@ ActiveRecord::Schema.define(version: 20170126130950) do
   add_index "users_protocols", ["role_id"], name: "index_users_protocols_on_role_id", using: :btree
   add_index "users_protocols", ["user_id"], name: "index_users_protocols_on_user_id", using: :btree
 
-  add_foreign_key "acms_users_protocols", "acms"
-  add_foreign_key "acms_users_protocols", "users_protocols"
-  add_foreign_key "ieees_users_protocols", "ieees"
-  add_foreign_key "ieees_users_protocols", "users_protocols"
-  add_foreign_key "scidirs_users_protocols", "scidirs"
-  add_foreign_key "scidirs_users_protocols", "users_protocols"
-  add_foreign_key "scopus_users_protocols", "scopus"
-  add_foreign_key "scopus_users_protocols", "users_protocols"
-  add_foreign_key "springers_users_protocols", "springers"
-  add_foreign_key "springers_users_protocols", "users_protocols"
+  add_foreign_key "acms_users_protocols", "acms", on_delete: :cascade
+  add_foreign_key "acms_users_protocols", "users_protocols", on_delete: :cascade
+  add_foreign_key "ieees_users_protocols", "ieees", on_delete: :cascade
+  add_foreign_key "ieees_users_protocols", "users_protocols", on_delete: :cascade
+  add_foreign_key "scidirs_users_protocols", "scidirs", on_delete: :cascade
+  add_foreign_key "scidirs_users_protocols", "users_protocols", on_delete: :cascade
+  add_foreign_key "scopus_users_protocols", "scopus", on_delete: :cascade
+  add_foreign_key "scopus_users_protocols", "users_protocols", on_delete: :cascade
+  add_foreign_key "springers_users_protocols", "springers", on_delete: :cascade
+  add_foreign_key "springers_users_protocols", "users_protocols", on_delete: :cascade
   add_foreign_key "users_protocols", "protocols"
   add_foreign_key "users_protocols", "roles"
   add_foreign_key "users_protocols", "users"

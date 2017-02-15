@@ -3,12 +3,16 @@ class ScopusUsersProtocol < ActiveRecord::Base
   # user_hash = {user_protocol_id, percentage}
   def self.randomize_studies (user_hash, protocol)
     studies = Scopu.where('protocol_id = ?', protocol.id)
+    ScopusUsersProtocol.where(scopu_id: studies).delete_all
     total = studies.count()
 
-    # change the percentage to an actual number of studies
-    user_hash.each { |key, value| user_hash[key] = (value*total*0.01).to_i }
+    # change the percentage to an actual quantity of studies
+    user_quantity = {}
+    user_hash.each do |key, value|
+      user_quantity[key] = (value*total*0.01).to_i
+    end
 
-    user_array = user_hash.to_a
+    user_array = user_quantity.to_a
 
     study_index = 0
     user_index = 0

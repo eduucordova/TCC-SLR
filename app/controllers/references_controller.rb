@@ -17,6 +17,17 @@ class ReferencesController < ApplicationController
     end
 
     @reference = Reference.where('protocol_id = ?', params[:id])
+    user_protocol = UsersProtocol.where('protocol_id = ? and user_id = ?', params[:id], current_user.id).select('id').first
+    ieees = Ieee.where('protocol_id = ?', params[:id]).select('id')
+    acms = Acm.where('protocol_id = ?', params[:id]).select('id')
+    scopus = Scopu.where('protocol_id = ?', params[:id]).select('id')
+    springers = Springer.where('protocol_id = ?', params[:id]).select('id')
+    scidirs = Scidir.where('protocol_id = ?', params[:id]).select('id')
+    @ieee = IeeesUsersProtocol.where('ieee_id in (?) and users_protocol_id = ?', ieees, user_protocol.id)
+    @acm = AcmsUsersProtocol.where('acm_id in (?) and users_protocol_id = ?', acms, user_protocol.id)
+    @scopus = ScopusUsersProtocol.where('scopu_id in (?) and users_protocol_id = ?', scopus, user_protocol.id)
+    @springer = SpringersUsersProtocol.where('springer_id in (?) and users_protocol_id = ?', springers, user_protocol.id)
+    @scidir = ScidirsUsersProtocol.where('scidir_id in (?) and users_protocol_id = ?', scidirs, user_protocol.id)
   end
 
   # GET /references/new
@@ -36,7 +47,7 @@ class ReferencesController < ApplicationController
     end
     respond_to do |format|
       format.html { render :partial => 'distribute_studies' }
-      format.json
+      format.js { render action: 'show' }
     end
   end
 
@@ -57,15 +68,16 @@ class ReferencesController < ApplicationController
     end
 
     if !hash.empty?
-      IeeesUsersProtocol.randomize_studies(@userProtocolId, @range) if @protocol.ieee?
+      IeeesUsersProtocol.randomize_studies(hash, @protocol) if @protocol.ieee?
 
-      ScidirsUsersProtocol.randomize_studies(@userProtocolId, @range) if @protocol.science_direct?
+      ScidirsUsersProtocol.randomize_studies(hash, @protocol) if @protocol.science_direct?
+
+      AcmsUsersProtocol.randomize_studies(hash, @protocol) if @protocol.acm?
+
+      SpringersUsersProtocol.randomize_studies(hash, @protocol) if @protocol.springer?
 
       ScopusUsersProtocol.randomize_studies(hash, @protocol) if @protocol.scopus?
 
-      AcmsUsersProtocol.randomize_studies(@userProtocolId, @range) if @protocol.acm?
-
-      SpringersUsersProtocol.randomize_studies(@userProtocolId, @range) if @protocol.springer?
     end
 
     redirect_to :back
