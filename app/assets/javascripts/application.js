@@ -45,7 +45,6 @@ $(document).ready(function () {
 
     $('#btnDistribute').bind('click', function(e) {
         var obj = [];
-        var distributes = [];
 
         $.each($("#modal_table tr"), function (key, value) {
             if(key > 0) {
@@ -60,23 +59,19 @@ $(document).ready(function () {
             obj[key]["range"] = value.children[1].value;
         });
 
-        distributes.push({
-            users: obj
-        });
-
         $.ajax({
+            contentType: 'application/json; charset=utf-8',
+            dataType: 'JSON',
             url: 'distribute',
-            data: JSON.stringify(distributes),
+            data: JSON.stringify({'distribution' : obj}),
             type: "POST",
-            dataType: "JSON",
-            success: function(response) {
-                console.log(response);
-                $('#distribute_studies').modal('hide');
-                alert(response);
-            },
-            error: function(xhr, textStatus, errorThrown) {}
+            complete: function(response) {
+                if (response.status === 200) {
+                    $('#distribute_studies').modal('hide');
+                    location.reload()
+                }
+            }
         });
-        // $('#distribute_studies').modal('hide');
     });
 });
 

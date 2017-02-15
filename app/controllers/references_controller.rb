@@ -47,23 +47,19 @@ class ReferencesController < ApplicationController
     end
     respond_to do |format|
       format.html { render :partial => 'distribute_studies' }
-      format.js { render action: 'show' }
+      format.js {  }
     end
   end
 
   def distribute
     hash = Hash.new()
-    # Ugliest way to parse data from server
-    params.first[1].first.first.split(',').each do |user_range|
-      if user_range.include? 'user_id'
-        @userProtocolId = user_range.scan(/\d+/).first
-        @range = nil
-        if @protocol.nil?
-          @protocol = UsersProtocol.find(@userProtocolId).protocol
-        end
-      else
-        @range = user_range.scan(/\d+/).first.to_i
-        hash[@userProtocolId] = @range
+
+    params[:distribution].each do | user_range |
+      userProtocolId = user_range[:user_id].to_i
+      range = user_range[:range].to_i
+      hash[userProtocolId] = range
+      if @protocol.nil?
+        @protocol = UsersProtocol.find(userProtocolId).protocol
       end
     end
 
