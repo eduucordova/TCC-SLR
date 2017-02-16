@@ -41,6 +41,20 @@ Rails.application.routes.draw do
     end
   end
 
+  resources :ieees do
+    member do
+      put 'select', to: 'ieees#select'
+      put 'unselect', to: 'ieees#unselect'
+    end
+  end
+
+  resources :ieees_users_protocols do
+    member do
+      put 'select', to: 'ieees_users_protocols#select'
+      put 'unselect', to: 'ieees_users_protocols#unselect'
+    end
+  end
+
   resources :protocols do
     member do
       # Using member you create a route for that specific protocol, e.g. 'protocols/5/search'
@@ -50,13 +64,6 @@ Rails.application.routes.draw do
       get 'selected'
       get 'included'
       get 'distribute_studies', to: 'references#distribute_studies'
-    end
-  end
-
-  resources :ieees do
-    member do
-      put 'select', to: 'ieees#select'
-      put 'unselect', to: 'ieees#unselect'
     end
   end
 
