@@ -14,14 +14,12 @@ Rails.application.routes.draw do
       put 'unselect', to: 'springers#unselect'
     end
   end
-
   resources :scopus do
     member do
       put 'select', to: 'scopus#select'
       put 'unselect', to: 'scopus#unselect'
     end
   end
-
   resources :scidirs do
     member do
       put 'select', to: 'scidirs#select'
@@ -34,13 +32,6 @@ Rails.application.routes.draw do
       put 'unselect', to: 'acms#unselect'
     end
   end
-
-  resources :references do
-    collection do
-      post 'distribute'
-    end
-  end
-
   resources :ieees do
     member do
       put 'select', to: 'ieees#select'
@@ -48,10 +39,40 @@ Rails.application.routes.draw do
     end
   end
 
+  resources :springers_users_protocols do
+    member do
+      put 'select', to: 'springers_users_protocols#select'
+      put 'unselect', to: 'springers_users_protocols#unselect'
+    end
+  end
+  resources :scopus_users_protocols do
+    member do
+      put 'select', to: 'scopus_users_protocols#select'
+      put 'unselect', to: 'scopus_users_protocols#unselect'
+    end
+  end
+  resources :scidirs_users_protocols do
+    member do
+      put 'select', to: 'scidirs_users_protocols#select'
+      put 'unselect', to: 'scidirs_users_protocols#unselect'
+    end
+  end
+  resources :acms_users_protocols do
+    member do
+      put 'select', to: 'acms_users_protocols#select'
+      put 'unselect', to: 'acms_users_protocols#unselect'
+    end
+  end
   resources :ieees_users_protocols do
     member do
       put 'select', to: 'ieees_users_protocols#select'
       put 'unselect', to: 'ieees_users_protocols#unselect'
+    end
+  end
+
+  resources :references do
+    collection do
+      post 'distribute'
     end
   end
 
