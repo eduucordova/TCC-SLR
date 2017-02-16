@@ -14,8 +14,15 @@
 //= require jquery_ujs
 //= require bootstrap
 //= require bootstrap-slider
+//= require nprogress
+//= require nprogress-turbolinks
+//= require nprogress-ajax
 
 $(document).ready(function () {
+    NProgress.configure({
+        showSpinner: true
+    });
+
     $("a.link_to_add_fields").on("click", function (e) {
         e.preventDefault();
         $("a.link_to_remove_fields").prev("input[type=hidden]").val(false);

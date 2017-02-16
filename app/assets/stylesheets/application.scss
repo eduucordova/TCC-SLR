@@ -1,3 +1,7 @@
+@import "nprogress";
+@import "nprogress-bootstrap";
+@import "nprogress-turbolinks5";
+
 @import "bootstrap-slider";
 
 @import "bootstrap-sprockets";
@@ -6,6 +10,14 @@
   background: #1e1e1e;
   width: 980px;
   height: 97px;
+}
+
+.nprogress-busy  {
+  cursor: wait;
+
+  body {
+    pointer-events: none;
+  }
 }
 
 #header_name {

@@ -141,6 +141,7 @@ GEM
     nokogiri (1.6.8)
       mini_portile2 (~> 2.1.0)
       pkg-config (~> 1.1.7)
+    nprogress-rails (0.2.0.2)
     ntlm-http (0.1.1)
     orm_adapter (0.5.0)
     passenger (5.0.29)
@@ -256,6 +257,7 @@ DEPENDENCIES
   jquery-rails
   mechanize (~> 2.7.3)
   mysql2 (~> 0.3.19)
+  nprogress-rails
   passenger
   rails (= 4.2.1)
   sass-rails (~> 5.0)
