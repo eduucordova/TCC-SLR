@@ -62,7 +62,7 @@ class ReferencesController < ApplicationController
         @protocol = UsersProtocol.find(userProtocolId).protocol
       end
     end
-    byebug
+
     if !hash.empty?
       IeeesUsersProtocol.randomize_studies(hash, @protocol) if @protocol.ieee?
 

@@ -12,7 +12,6 @@ class ScopusUsersProtocolsController < ApplicationController
 
   def select
     @scopu = ScopusUsersProtocol.where(scopu_id: params[:id], users_protocol_id: @user_protocol).first
-    byebug
     @scopu.included = 1
     @scopu.save!
 
