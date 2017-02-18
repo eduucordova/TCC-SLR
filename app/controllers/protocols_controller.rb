@@ -109,26 +109,31 @@ class ProtocolsController < ApplicationController
 
     if @protocol.ieee
       @ieee = Ieee.new
+      byebug
       @ieee = @ieee.search(query, protocol_id, max_results, from, to)
     end
 
     if @protocol.scopus
       @scopu = Scopu.new
+      byebug
       @scopu = @scopu.search(query, protocol_id, max_results, from, to)
     end
 
     if @protocol.science_direct
       @scidir = Scidir.new
+      byebug
       @scidir = @scidir.search(query, protocol_id, max_results, from, to)
     end
 
     if @protocol.acm
       @acm = Acm.new
+      byebug
       @acm = @acm.search(query, protocol_id, max_results, from, to)
     end
 
     if @protocol.springer
       @springer = Springer.new
+      byebug
       @springer = @springer.search(query, protocol_id, max_results, from, to)
     end
 

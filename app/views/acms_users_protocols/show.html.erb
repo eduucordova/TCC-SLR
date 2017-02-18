@@ -19,11 +19,11 @@
             <div class="panel panel-default">
               <div class="panel-heading" align="left"> <b><%= link_to acm.title, acm.link  %> </b>
                 <div align="right">
-                  <%= link_to select_acm_path(acm), method: :put, class: 'btn btn-default btn-sm' do %>
+                  <%= link_to select_acms_users_protocol_path(acm), method: :put, class: 'btn btn-default btn-sm' do %>
                       <span class="glyphicon glyphicon-ok"></span>
                       Incluir
                   <% end %>
-                  <%= link_to unselect_acm_path(acm), method: :put, class: 'btn btn-default btn-sm' do %>
+                  <%= link_to unselect_acms_users_protocol_path(acm), method: :put, class: 'btn btn-default btn-sm' do %>
                       <span class="glyphicon glyphicon-remove"></span>
                       Excluir
                   <% end %>

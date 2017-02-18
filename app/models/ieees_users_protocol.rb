@@ -1,7 +1,7 @@
 class IeeesUsersProtocol < ActiveRecord::Base
 
   # user_hash = {user_protocol_id, percentage}
-  def self.randomize_studies (user_hash, protocol)
+  def self.randomize_studies(user_hash, protocol)
     studies = Ieee.where('protocol_id = ?', protocol.id)
     IeeesUsersProtocol.where(ieee_id: studies).delete_all
     total = studies.count()
@@ -27,6 +27,10 @@ class IeeesUsersProtocol < ActiveRecord::Base
         else
           user_array[user_index][1] -= 1
           study_index = study_index.modulo(studies.count)
+          while IeeesUsersProtocol.exists?(:users_protocol_id => user_array[user_index][0], :ieee_id => studies[study_index].id)
+            study_index += 1
+            study_index = study_index.modulo(studies.count)
+          end
           IeeesUsersProtocol.create(:users_protocol_id => user_array[user_index][0], :ieee_id => studies[study_index].id)
           study_index += 1
         end
@@ -34,4 +38,5 @@ class IeeesUsersProtocol < ActiveRecord::Base
       user_index += 1
     end
   end
+
 end

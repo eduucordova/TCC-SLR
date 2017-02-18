@@ -28,6 +28,10 @@ class SpringersUsersProtocol < ActiveRecord::Base
         else
           user_array[user_index][1] -= 1
           study_index = study_index.modulo(studies.count)
+          while SpringersUsersProtocol.exists?(:users_protocol_id => user_array[user_index][0], :springer_id => studies[study_index].id)
+            study_index += 1
+            study_index = study_index.modulo(studies.count)
+          end
           SpringersUsersProtocol.create(:users_protocol_id => user_array[user_index][0], :springer_id => studies[study_index].id)
           study_index += 1
         end

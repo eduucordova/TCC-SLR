@@ -17,13 +17,13 @@
         <% @scopus.each do |scopus| %>
             <br>
             <div class="panel panel-default">
-              <div class="panel-heading" align="left"> <b><%= link_to scopus.title, scopus.link  %> </b>
+              <div class="panel-heading" align="left"> <b><%= link_to scopus.title, scopus.link, target: :_blank  %> </b>
                 <div align="right">
-                  <%= link_to select_scopu_path(scopus), method: :put, class: 'btn btn-default btn-sm' do %>
+                  <%= link_to select_scopus_users_protocol_path(scopus), method: :put, class: 'btn btn-default btn-sm' do %>
                       <span class="glyphicon glyphicon-ok"></span>
                       Incluir
                   <% end %>
-                  <%= link_to unselect_scopu_path(scopus), method: :put, class: 'btn btn-default btn-sm' do %>
+                  <%= link_to unselect_scopus_users_protocol_path(scopus), method: :put, class: 'btn btn-default btn-sm' do %>
                       <span class="glyphicon glyphicon-remove"></span>
                       Excluir
                   <% end %>
