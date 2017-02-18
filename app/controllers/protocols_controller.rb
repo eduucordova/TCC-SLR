@@ -109,31 +109,26 @@ class ProtocolsController < ApplicationController
 
     if @protocol.ieee
       @ieee = Ieee.new
-      byebug
       @ieee = @ieee.search(query, protocol_id, max_results, from, to)
     end
 
     if @protocol.scopus
       @scopu = Scopu.new
-      byebug
       @scopu = @scopu.search(query, protocol_id, max_results, from, to)
     end
 
     if @protocol.science_direct
       @scidir = Scidir.new
-      byebug
       @scidir = @scidir.search(query, protocol_id, max_results, from, to)
     end
 
     if @protocol.acm
       @acm = Acm.new
-      byebug
       @acm = @acm.search(query, protocol_id, max_results, from, to)
     end
 
     if @protocol.springer
       @springer = Springer.new
-      byebug
       @springer = @springer.search(query, protocol_id, max_results, from, to)
     end
 
@@ -153,9 +148,8 @@ class ProtocolsController < ApplicationController
 
 
     if @protocol.ieee
-      ieees_id = IeeesUsersProtocol.where(users_protocol_id: @user_protocol, included: true).select(:ieee_id)
+      ieees_id = IeeesUsersProtocol.where(users_protocol_id: @user_protocol, pre_selected: true, included: nil).select(:ieee_id)
       @selected = Ieee.where(id: ieees_id)
-      # @selected = Included.where("protocol_id = ? AND included = 0 AND name_database = 'ieee'", params[:id])
 
       @selected.each { |ieee|
         @selected_ieee.push(ieee)
@@ -163,9 +157,8 @@ class ProtocolsController < ApplicationController
     end
 
     if @protocol.science_direct
-      scidirs_id = ScidirsUsersProtocol.where(users_protocol_id: @user_protocol, included: true).select(:scidir_id)
+      scidirs_id = ScidirsUsersProtocol.where(users_protocol_id: @user_protocol, pre_selected: true, included: nil).select(:scidir_id)
       @selected = Scidir.where(id: scidirs_id)
-      # @selected = Included.where("protocol_id = ? AND included = 0 AND name_database = 'scidir'", params[:id])
 
       @selected.each { |scidir|
         @selected_scidir.push(scidir)
@@ -173,9 +166,8 @@ class ProtocolsController < ApplicationController
     end
 
     if @protocol.scopus
-      scopus_id = ScopusUsersProtocol.where(users_protocol_id: @user_protocol, included: true).select(:scopu_id)
+      scopus_id = ScopusUsersProtocol.where(users_protocol_id: @user_protocol, pre_selected: true).select(:scopu_id)
       @selected = Scopu.where(id: scopus_id)
-      # @selected = Included.where("protocol_id = ? AND included = 0 AND name_database = 'scopus'", params[:id])
 
       @selected.each { |scopus|
         @selected_scopus.push(scopus)
@@ -184,9 +176,8 @@ class ProtocolsController < ApplicationController
     end
 
     if @protocol.acm
-      acms_id = AcmsUsersProtocol.where(users_protocol_id: @user_protocol, included: true).select(:acm_id)
+      acms_id = AcmsUsersProtocol.where(users_protocol_id: @user_protocol, pre_selected: true).select(:acm_id)
       @selected = Acm.where(id: acms_id)
-      # @selected = Included.where("protocol_id = ? AND included = 0 AND name_database = 'acm'", params[:id])
 
       @selected.each { |acm|
         @selected_acm.push(acm)
@@ -194,9 +185,8 @@ class ProtocolsController < ApplicationController
     end
 
     if @protocol.springer
-      springers_id = SpringersUsersProtocol.where(users_protocol_id: @user_protocol, included: true).select(:springer_id)
+      springers_id = SpringersUsersProtocol.where(users_protocol_id: @user_protocol, pre_selected: true).select(:springer_id)
       @selected = Springer.where(id: springers_id)
-      # @selected = Included.where("protocol_id = ? AND included = 0 AND name_database = 'springer'", params[:id])
 
       @selected.each { |springer|
         @selected_springer.push(springer)
@@ -214,6 +204,7 @@ class ProtocolsController < ApplicationController
 
   def included
     @protocol = Protocol.find(params[:id])
+    @user_protocol = UsersProtocol.where(protocol_id: params[:id], user_id: current_user.id).first
 
     @included_ieee = []
     @included_scidir = []
@@ -222,7 +213,9 @@ class ProtocolsController < ApplicationController
     @included_springer = []
 
     if @protocol.ieee
-      @included = Included.where("protocol_id = ? AND included = 1 AND name_database = 'ieee'", params[:id])
+      # @included = Included.where("protocol_id = ? AND included = 1 AND name_database = 'ieee'", params[:id])
+      ieees_id = IeeesUsersProtocol.where(users_protocol_id: @user_protocol, included: true).select(:ieee_id)
+      @included = Ieee.where(id: ieees_id)
 
       @included.each { |ieee|
         @included_ieee.push(ieee)
@@ -232,7 +225,9 @@ class ProtocolsController < ApplicationController
     end
 
     if @protocol.science_direct
-      @included = Included.where("protocol_id = ? AND included = 1 AND name_database = 'scidir'", params[:id])
+      # @included = Included.where("protocol_id = ? AND included = 1 AND name_database = 'scidir'", params[:id])
+      scidir_id = ScidirsUsersProtocol.where(users_protocol_id: @user_protocol, included: true).select(:scidir_id)
+      @included = Scidir.where(id: scidir_id)
 
       @included.each { |scidir|
         @included_scidir.push(scidir)
@@ -242,7 +237,9 @@ class ProtocolsController < ApplicationController
     end
 
     if @protocol.scopus
-      @included = Included.where("protocol_id = ? AND included = 1 AND name_database = 'scopus'", params[:id])
+      # @included = Included.where("protocol_id = ? AND included = 1 AND name_database = 'scopus'", params[:id])
+      scopus_id = ScopusUsersProtocol.where(users_protocol_id: @user_protocol, included: true).select(:scopu_id)
+      @included = Scopu.where(id: scopus_id)
 
       @included.each { |scopus|
         @included_scopus.push(scopus)
@@ -252,7 +249,9 @@ class ProtocolsController < ApplicationController
     end
 
     if @protocol.acm
-      @included = Included.where("protocol_id = ? AND included = 1 AND name_database = 'acm'", params[:id])
+      # @included = Included.where("protocol_id = ? AND included = 1 AND name_database = 'acm'", params[:id])
+      acms_id = AcmsUsersProtocol.where(users_protocol_id: @user_protocol, included: true).select(:acm_id)
+      @included = Acm.where(id: acms_id)
 
       @included.each { |acm|
         @included_acm.push(acm)
@@ -262,7 +261,9 @@ class ProtocolsController < ApplicationController
     end
 
     if @protocol.springer
-      @included = Included.where("protocol_id = ? AND included = 1 AND name_database = 'springer'", params[:id])
+      # @included = Included.where("protocol_id = ? AND included = 1 AND name_database = 'springer'", params[:id])
+      springers_id = SpringersUsersProtocol.where(users_protocol_id: @user_protocol, included: true).select(:springer_id)
+      @included = Springer.where(id: springers_id)
 
       @included.each { |springer|
         @included_springer.push(springer)

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170126130950) do
+ActiveRecord::Schema.define(version: 20170218192901) do
 
   create_table "acms", force: :cascade do |t|
     t.text     "abstract",       limit: 65535
@@ -34,6 +34,7 @@ ActiveRecord::Schema.define(version: 20170126130950) do
     t.integer "acm_id",            limit: 4
     t.integer "users_protocol_id", limit: 4
     t.boolean "included",          limit: 1
+    t.boolean "pre_selected",      limit: 1
   end
 
   add_index "acms_users_protocols", ["acm_id"], name: "index_acms_users_protocols_on_acm_id", using: :btree
@@ -75,6 +76,7 @@ ActiveRecord::Schema.define(version: 20170126130950) do
     t.integer "ieee_id",           limit: 4
     t.integer "users_protocol_id", limit: 4
     t.boolean "included",          limit: 1
+    t.boolean "pre_selected",      limit: 1
   end
 
   add_index "ieees_users_protocols", ["ieee_id"], name: "index_ieees_users_protocols_on_ieee_id", using: :btree
@@ -151,6 +153,7 @@ ActiveRecord::Schema.define(version: 20170126130950) do
     t.integer "scidir_id",         limit: 4
     t.integer "users_protocol_id", limit: 4
     t.boolean "included",          limit: 1
+    t.boolean "pre_selected",      limit: 1
   end
 
   add_index "scidirs_users_protocols", ["scidir_id"], name: "index_scidirs_users_protocols_on_scidir_id", using: :btree
@@ -177,6 +180,7 @@ ActiveRecord::Schema.define(version: 20170126130950) do
     t.integer "scopu_id",          limit: 4
     t.integer "users_protocol_id", limit: 4
     t.boolean "included",          limit: 1
+    t.boolean "pre_selected",      limit: 1
   end
 
   add_index "scopus_users_protocols", ["scopu_id"], name: "index_scopus_users_protocols_on_scopu_id", using: :btree
@@ -202,6 +206,7 @@ ActiveRecord::Schema.define(version: 20170126130950) do
     t.integer "springer_id",       limit: 4
     t.integer "users_protocol_id", limit: 4
     t.boolean "included",          limit: 1
+    t.boolean "pre_selected",      limit: 1
   end
 
   add_index "springers_users_protocols", ["springer_id"], name: "index_springers_users_protocols_on_springer_id", using: :btree

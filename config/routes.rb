@@ -43,30 +43,45 @@ Rails.application.routes.draw do
     member do
       put 'select', to: 'springers_users_protocols#select'
       put 'unselect', to: 'springers_users_protocols#unselect'
+      put 'include', to: 'springers_users_protocols#include'
+      put 'exclude', to: 'springers_users_protocols#exclude'
+      get 'csv', to: 'springers_users_protocols#csv'
     end
   end
   resources :scopus_users_protocols do
     member do
       put 'select', to: 'scopus_users_protocols#select'
       put 'unselect', to: 'scopus_users_protocols#unselect'
+      put 'include', to: 'scopus_users_protocols#include'
+      put 'exclude', to: 'scopus_users_protocols#exclude'
+      get 'csv', to: 'scopus_users_protocols#csv'
     end
   end
   resources :scidirs_users_protocols do
     member do
       put 'select', to: 'scidirs_users_protocols#select'
       put 'unselect', to: 'scidirs_users_protocols#unselect'
+      put 'include', to: 'scidirs_users_protocols#include'
+      put 'exclude', to: 'scidirs_users_protocols#exclude'
+      get 'csv', to: 'scidirs_users_protocols#csv'
     end
   end
   resources :acms_users_protocols do
     member do
       put 'select', to: 'acms_users_protocols#select'
       put 'unselect', to: 'acms_users_protocols#unselect'
+      put 'include', to: 'acms_users_protocols#include'
+      put 'exclude', to: 'acms_users_protocols#exclude'
+      get 'csv', to: 'acms_users_protocols#csv'
     end
   end
   resources :ieees_users_protocols do
     member do
       put 'select', to: 'ieees_users_protocols#select'
       put 'unselect', to: 'ieees_users_protocols#unselect'
+      put 'include', to: 'ieees_users_protocols#include'
+      put 'exclude', to: 'ieees_users_protocols#exclude'
+      get 'csv', to: 'ieees_users_protocols#csv'
     end
   end
 

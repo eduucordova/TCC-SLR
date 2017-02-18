@@ -1,10 +1,10 @@
 class SpringersUsersProtocolsController < ApplicationController
   before_action :set_session, only: [:show]
-  before_action :set_user_protocol, only: [:show, :select, :unselect]
+  before_action :set_user_protocol, only: [:show, :select, :unselect, :include, :exclude]
 
   def show
     studies = Springer.where(protocol_id: params[:id])
-    springers_id = SpringersUsersProtocol.where(users_protocol_id: @user_protocol, included: nil).select('springer_id')
+    springers_id = SpringersUsersProtocol.where(users_protocol_id: @user_protocol, pre_selected: nil).select('springer_id')
     @springers = studies.where(id: springers_id).paginate(:page => params[:page], per_page: 10)
 
     @reference = Reference.find_by_protocol_id(params[:id])
@@ -12,13 +12,29 @@ class SpringersUsersProtocolsController < ApplicationController
 
   def select
     @springer = SpringersUsersProtocol.where(springer_id: params[:id], users_protocol_id: @user_protocol).first
-    @springer.included = 1
+    @springer.pre_selected = 1
     @springer.save!
 
     redirect_to :back
   end
 
   def unselect
+    @springer = SpringersUsersProtocol.where(springer_id: params[:id].to_i, users_protocol_id: @user_protocol).first
+    @springer.pre_selected = 0
+    @springer.save!
+
+    redirect_to :back
+  end
+
+  def include
+    @springer = SpringersUsersProtocol.where(springer_id: params[:id], users_protocol_id: @user_protocol).first
+    @springer.included = 1
+    @springer.save!
+
+    redirect_to :back
+  end
+
+  def exclude
     @springer = SpringersUsersProtocol.where(springer_id: params[:id].to_i, users_protocol_id: @user_protocol).first
     @springer.included = 0
     @springer.save!

@@ -23,11 +23,11 @@ class ReferencesController < ApplicationController
     scopus = Scopu.where('protocol_id = ?', params[:id]).select('id')
     springers = Springer.where('protocol_id = ?', params[:id]).select('id')
     scidirs = Scidir.where('protocol_id = ?', params[:id]).select('id')
-    @ieee = IeeesUsersProtocol.where('ieee_id in (?) AND users_protocol_id = ? AND included IS NULL', ieees, user_protocol.id)
-    @acm = AcmsUsersProtocol.where('acm_id in (?) AND users_protocol_id = ? AND included IS NULL', acms, user_protocol.id)
-    @scopus = ScopusUsersProtocol.where('scopu_id in (?) AND users_protocol_id = ? AND included IS NULL', scopus, user_protocol.id)
-    @springer = SpringersUsersProtocol.where('springer_id in (?) AND users_protocol_id = ? AND included IS NULL', springers, user_protocol.id)
-    @scidir = ScidirsUsersProtocol.where('scidir_id in (?) AND users_protocol_id = ? AND included IS NULL', scidirs, user_protocol.id)
+    @ieee = IeeesUsersProtocol.where('ieee_id in (?) AND users_protocol_id = ? AND pre_selected IS NULL', ieees, user_protocol.id)
+    @acm = AcmsUsersProtocol.where('acm_id in (?) AND users_protocol_id = ? AND pre_selected IS NULL', acms, user_protocol.id)
+    @scopus = ScopusUsersProtocol.where('scopu_id in (?) AND users_protocol_id = ? AND pre_selected IS NULL', scopus, user_protocol.id)
+    @springer = SpringersUsersProtocol.where('springer_id in (?) AND users_protocol_id = ? AND pre_selected IS NULL', springers, user_protocol.id)
+    @scidir = ScidirsUsersProtocol.where('scidir_id in (?) AND users_protocol_id = ? AND pre_selected IS NULL', scidirs, user_protocol.id)
   end
 
   # GET /references/new
