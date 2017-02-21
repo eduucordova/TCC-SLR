@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170218192901) do
+ActiveRecord::Schema.define(version: 20170219135437) do
 
   create_table "acms", force: :cascade do |t|
     t.text     "abstract",       limit: 65535
@@ -251,11 +251,12 @@ ActiveRecord::Schema.define(version: 20170218192901) do
   add_index "users", ["username"], name: "index_users_on_username", unique: true, using: :btree
 
   create_table "users_protocols", force: :cascade do |t|
-    t.integer  "user_id",     limit: 4
-    t.integer  "protocol_id", limit: 4
-    t.datetime "created_at",            null: false
-    t.datetime "updated_at",            null: false
-    t.integer  "role_id",     limit: 4
+    t.integer  "user_id",             limit: 4
+    t.integer  "protocol_id",         limit: 4
+    t.datetime "created_at",                    null: false
+    t.datetime "updated_at",                    null: false
+    t.integer  "role_id",             limit: 4
+    t.boolean  "selection_submitted", limit: 1
   end
 
   add_index "users_protocols", ["protocol_id"], name: "index_users_protocols_on_protocol_id", using: :btree

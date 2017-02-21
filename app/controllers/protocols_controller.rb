@@ -21,6 +21,8 @@ class ProtocolsController < ApplicationController
       puts user_protocol.role.name
       puts user_protocol.user.username
     end
+
+    session[:protocol_id] = params[:id].to_i
   end
 
   # GET /protocols/new
@@ -166,7 +168,7 @@ class ProtocolsController < ApplicationController
     end
 
     if @protocol.scopus
-      scopus_id = ScopusUsersProtocol.where(users_protocol_id: @user_protocol, pre_selected: true).select(:scopu_id)
+      scopus_id = ScopusUsersProtocol.where(users_protocol_id: @user_protocol, pre_selected: true, included: nil).select(:scopu_id)
       @selected = Scopu.where(id: scopus_id)
 
       @selected.each { |scopus|
@@ -176,7 +178,7 @@ class ProtocolsController < ApplicationController
     end
 
     if @protocol.acm
-      acms_id = AcmsUsersProtocol.where(users_protocol_id: @user_protocol, pre_selected: true).select(:acm_id)
+      acms_id = AcmsUsersProtocol.where(users_protocol_id: @user_protocol, pre_selected: true, included: nil).select(:acm_id)
       @selected = Acm.where(id: acms_id)
 
       @selected.each { |acm|
@@ -185,7 +187,7 @@ class ProtocolsController < ApplicationController
     end
 
     if @protocol.springer
-      springers_id = SpringersUsersProtocol.where(users_protocol_id: @user_protocol, pre_selected: true).select(:springer_id)
+      springers_id = SpringersUsersProtocol.where(users_protocol_id: @user_protocol, pre_selected: true, included: nil).select(:springer_id)
       @selected = Springer.where(id: springers_id)
 
       @selected.each { |springer|
@@ -280,7 +282,7 @@ class ProtocolsController < ApplicationController
 
     @ref_protocol = reference_exist
 
-    @includeds = Included.where("included = 1 AND protocol_id = ?", params[:id])
+    # @includeds = Included.where("included = 1 AND protocol_id = ?", params[:id])
 
     respond_to do |format|
       format.html
