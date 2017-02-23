@@ -4,19 +4,28 @@
   <li><%= link_to 'Protocolo', protocol_path %></li>
   <li><%= link_to 'Execução da Busca', search_protocol_path %></li>
   <li><%= link_to 'Resultados Retornados', reference_path %></li>
-  <li class="active"> Trabalhos pré-selecionados </li>
-  <li><%= link_to 'Trabalhos selecionados', included_users_protocol_path %></li>
+  <li><%= link_to 'Trabalhos pré-selecionados', selected_protocol_path %></li>
+  <li class="active"> Trabalhos selecionados </li>
+  <li><%= link_to 'Resolução de conflitos', show_conflicts_users_protocol_path %></li>
 
 </ol>
 
-<% if @empty_ieee && @empty_scidir && @empty_scopus && @empty_acm && @empty_springer %>
-    <div class="alert alert-info"><b> Nenhum trabalho pré-selecionado na revisão </b></div>
+<% if @empty_ieee && @empty_scidir && @empty_scopus && @empty_acm && @empty_springer%>
+    <div class="alert alert-info"><b> Nenhum trabalho incluído na revisão </b></div>
+<% else %>
+    <div class="pull-left" >
+      <%= link_to included_protocol_path(format: "xls"), class: "btn btn-default" do %>
+          Exportar Dados
+          <span class="glyphicon glyphicon-download-alt" ></span>
+      <% end %>
+    </div>
+    <br><br>
 <% end %>
 
 <% unless @empty_ieee %>
     <div class="panel panel-default">
       <div class="panel-heading">
-        <b><%= link_to 'IEEE Xplore Digital Library', ieee_path %> </b>
+        <b><%= link_to 'IEEE Xplore Digital Library' + ' (' + @count_ieee + ')', ieee_path  %> </b>
       </div>
       <div class="panel-body">
         <div class="container-fluid">
@@ -25,25 +34,17 @@
             <tr>
               <th>Título</th>
               <th>Autores</th>
-              <th>Seleção</th>
-              <th></th>
+              <th>Excluir?</th>
             </tr>
             </thead>
             <tbody>
-            <% @selected_ieee.each do |ref| %>
+            <% @included_ieee.each do |ref| %>
                 <tr>
                   <td><%= link_to ref.title, ref.link %></td>
                   <td><%= ref.author %></td>
                   <td>
-                    <%= link_to include_ieees_users_protocol_path(ref), method: :put, class: 'btn btn-default btn-sm' do %>
-                        <span class="glyphicon glyphicon-ok"></span>
-                        Incluir
-                    <% end %>
-                  </td>
-                  <td>
                     <%= link_to exclude_ieees_users_protocol_path(ref), method: :put, class: 'btn btn-default btn-sm' do %>
-                        <span class="glyphicon glyphicon-remove"></span>
-                        Excluir
+                        <span class="glyphicon glyphicon-trash"></span>
                     <% end %>
                   </td>
                 </tr>
@@ -55,11 +56,10 @@
     </div>
 <% end %>
 
-
 <% unless @empty_scidir %>
     <div class="panel panel-default">
       <div class="panel-heading">
-        <b><%= link_to 'Science Direct Digital Library', scidir_path %></b>
+        <b><%= link_to 'Science Direct Digital Library' + ' (' + @count_scidir + ')', scidir_path %> </b>
       </div>
       <div class="panel-body">
         <div class="container-fluid">
@@ -68,25 +68,17 @@
               <tr>
                 <th>Título</th>
                 <th>Autores</th>
-                <th>Seleção</th>
-                <th></th>
+                <th>Excluir?</th>
               </tr>
               </thead>
               <tbody>
-              <% @selected_scidir.each do |ref| %>
+              <% @included_scidir.each do |ref| %>
                   <tr>
                     <td><%= link_to ref.title, ref.link %></td>
                     <td><%= ref.author %></td>
                     <td>
-                      <%= link_to include_scidirs_users_protocol_path(ref), method: :put, class: 'btn btn-default btn-sm' do %>
-                          <span class="glyphicon glyphicon-ok"></span>
-                          Incluir
-                      <% end %>
-                    </td>
-                    <td>
                       <%= link_to exclude_scidirs_users_protocol_path(ref), method: :put, class: 'btn btn-default btn-sm' do %>
-                          <span class="glyphicon glyphicon-remove"></span>
-                          Excluir
+                          <span class="glyphicon glyphicon-trash"></span>
                       <% end %>
                     </td>
                   </tr>
@@ -101,7 +93,7 @@
 <% unless @empty_scopus %>
     <div class="panel panel-default">
       <div class="panel-heading">
-        <b><%= link_to 'Scopus Digital Library', scopu_path %></b>
+        <b><%= link_to 'Scopus Digital Library' + ' (' + @count_scopus + ')', scopu_path %> </b>
       </div>
       <div class="panel-body">
         <div class="container-fluid">
@@ -110,25 +102,17 @@
             <tr>
               <th>Título</th>
               <th>Autores</th>
-              <th>Seleção</th>
-              <th></th>
+              <th>Excluir?</th>
             </tr>
             </thead>
             <tbody>
-            <% @selected_scopus.each do |ref| %>
+            <% @included_scopus.each do |ref| %>
                 <tr>
                   <td><%= link_to ref.title, ref.link %></td>
                   <td><%= ref.author %></td>
                   <td>
-                    <%= link_to include_scopus_users_protocol_path(ref), method: :put, class: 'btn btn-default btn-sm' do %>
-                        <span class="glyphicon glyphicon-ok"></span>
-                        Incluir
-                    <% end %>
-                  </td>
-                  <td>
                     <%= link_to exclude_scopus_users_protocol_path(ref), method: :put, class: 'btn btn-default btn-sm' do %>
-                        <span class="glyphicon glyphicon-remove"></span>
-                        Excluir
+                        <span class="glyphicon glyphicon-trash"></span>
                     <% end %>
                   </td>
                 </tr>
@@ -143,7 +127,7 @@
 <% unless @empty_acm %>
     <div class="panel panel-default">
       <div class="panel-heading">
-        <b><%= link_to 'ACM Digital Library', acm_path %></b>
+        <b><%= link_to 'ACM Digital Library' + ' (' + @count_acm + ')', acm_path %> </b>
       </div>
       <div class="panel-body">
         <div class="container-fluid">
@@ -152,25 +136,17 @@
             <tr>
               <th>Título</th>
               <th>Autores</th>
-              <th>Seleção</th>
-              <th></th>
+              <th>Excluir?</th>
             </tr>
             </thead>
             <tbody>
-            <% @selected_acm.each do |ref| %>
+            <% @included_acm.each do |ref| %>
                 <tr>
                   <td><%= link_to ref.title, ref.link %></td>
                   <td><%= ref.author %></td>
                   <td>
-                    <%= link_to include_acms_users_protocol_path(ref), method: :put, class: 'btn btn-default btn-sm' do %>
-                        <span class="glyphicon glyphicon-ok"></span>
-                        Incluir
-                    <% end %>
-                  </td>
-                  <td>
                     <%= link_to exclude_acms_users_protocol_path(ref), method: :put, class: 'btn btn-default btn-sm' do %>
-                        <span class="glyphicon glyphicon-remove"></span>
-                        Excluir
+                        <span class="glyphicon glyphicon-trash"></span>
                     <% end %>
                   </td>
                 </tr>
@@ -185,7 +161,7 @@
 <% unless @empty_springer %>
     <div class="panel panel-default">
       <div class="panel-heading">
-        <b><%= link_to 'Springer Link Digital Library', springer_path %></b>
+        <b><%= link_to 'Springer Link Digital Library' + ' (' + @count_springer + ')', springer_path %> </b>
       </div>
       <div class="panel-body">
         <div class="container-fluid">
@@ -194,25 +170,17 @@
             <tr>
               <th>Título</th>
               <th>Autores</th>
-              <th>Seleção</th>
-              <th></th>
+              <th>Excluir?</th>
             </tr>
             </thead>
             <tbody>
-            <% @selected_springer.each do |ref| %>
+            <% @included_springer.each do |ref| %>
                 <tr>
                   <td><%= link_to ref.title, ref.link %></td>
                   <td><%= ref.author %></td>
                   <td>
-                    <%= link_to include_springers_users_protocol_path(ref), method: :put, class: 'btn btn-default btn-sm' do %>
-                        <span class="glyphicon glyphicon-ok"></span>
-                        Incluir
-                    <% end %>
-                  </td>
-                  <td>
                     <%= link_to exclude_springers_users_protocol_path(ref), method: :put, class: 'btn btn-default btn-sm' do %>
-                        <span class="glyphicon glyphicon-remove"></span>
-                        Excluir
+                        <span class="glyphicon glyphicon-trash"></span>
                     <% end %>
                   </td>
                 </tr>
@@ -222,4 +190,8 @@
         </div>
       </div>
     </div>
+<% end %>
+
+<%= link_to submit_users_protocol_path, method: :put, class: 'btn btn-primary btn-lg' do %>
+    Submeter
 <% end %>

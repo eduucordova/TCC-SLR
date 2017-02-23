@@ -85,6 +85,14 @@ Rails.application.routes.draw do
     end
   end
 
+  resources :users_protocols do
+    member do
+      put 'submit'
+      get 'show_conflicts'
+      get 'included'
+    end
+  end
+
   resources :references do
     collection do
       post 'distribute'

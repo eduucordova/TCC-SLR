@@ -4,8 +4,9 @@
   <li><%= link_to 'Protocolo', protocol_path %></li>
   <li><%= link_to 'Execução da Busca', search_protocol_path %></li>
   <li><%= link_to 'Resultados Retornados', reference_path %></li>
-  <li><%= link_to 'Trabalhos pré-selecionados', selected_protocol_path %></li>
-  <li class="active"> Trabalhos selecionados </li>
+  <li><%= link_to 'Trabalhos selecionados', included_users_protocol_path %></li>
+  <li><%= link_to 'Resolução de conflitos', show_conflicts_users_protocol_path %></li>
+  <li class="active"> Seleção final </li>
 </ol>
 
 <% if @empty_ieee && @empty_scidir && @empty_scopus && @empty_acm && @empty_springer%>
@@ -61,28 +62,28 @@
       </div>
       <div class="panel-body">
         <div class="container-fluid">
-            <table class="table table-hover">
-              <thead>
-              <tr>
-                <th>Título</th>
-                <th>Autores</th>
-                <th>Excluir?</th>
-              </tr>
-              </thead>
-              <tbody>
-              <% @included_scidir.each do |ref| %>
-                  <tr>
-                    <td><%= link_to ref.title, ref.link %></td>
-                    <td><%= ref.author %></td>
-                    <td>
-                      <%= link_to exclude_included_path(ref), method: :put, class: 'btn btn-default btn-sm' do %>
-                          <span class="glyphicon glyphicon-trash"></span>
-                      <% end %>
-                    </td>
-                  </tr>
-              <% end %>
-              </tbody>
-            </table>
+          <table class="table table-hover">
+            <thead>
+            <tr>
+              <th>Título</th>
+              <th>Autores</th>
+              <th>Excluir?</th>
+            </tr>
+            </thead>
+            <tbody>
+            <% @included_scidir.each do |ref| %>
+                <tr>
+                  <td><%= link_to ref.title, ref.link %></td>
+                  <td><%= ref.author %></td>
+                  <td>
+                    <%= link_to exclude_included_path(ref), method: :put, class: 'btn btn-default btn-sm' do %>
+                        <span class="glyphicon glyphicon-trash"></span>
+                    <% end %>
+                  </td>
+                </tr>
+            <% end %>
+            </tbody>
+          </table>
         </div>
       </div>
     </div>
@@ -189,3 +190,5 @@
       </div>
     </div>
 <% end %>
+
+

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170219135437) do
+ActiveRecord::Schema.define(version: 20170221133915) do
 
   create_table "acms", force: :cascade do |t|
     t.text     "abstract",       limit: 65535
@@ -83,15 +83,17 @@ ActiveRecord::Schema.define(version: 20170219135437) do
   add_index "ieees_users_protocols", ["users_protocol_id"], name: "index_ieees_users_protocols_on_users_protocol_id", using: :btree
 
   create_table "includeds", force: :cascade do |t|
-    t.string   "title",         limit: 255
-    t.string   "author",        limit: 255
-    t.string   "pubtitle",      limit: 255
-    t.boolean  "included",      limit: 1
-    t.integer  "protocol_id",   limit: 4
-    t.datetime "created_at",                null: false
-    t.datetime "updated_at",                null: false
-    t.string   "link",          limit: 255
-    t.string   "name_database", limit: 255
+    t.string   "title",          limit: 255
+    t.string   "author",         limit: 255
+    t.string   "pubtitle",       limit: 255
+    t.boolean  "included",       limit: 1
+    t.integer  "protocol_id",    limit: 4
+    t.datetime "created_at",                             null: false
+    t.datetime "updated_at",                             null: false
+    t.string   "link",           limit: 255
+    t.string   "name_database",  limit: 255
+    t.integer  "times_included", limit: 4,   default: 0
+    t.integer  "times_excluded", limit: 4,   default: 0
   end
 
   create_table "protocols", force: :cascade do |t|
@@ -253,10 +255,10 @@ ActiveRecord::Schema.define(version: 20170219135437) do
   create_table "users_protocols", force: :cascade do |t|
     t.integer  "user_id",             limit: 4
     t.integer  "protocol_id",         limit: 4
-    t.datetime "created_at",                    null: false
-    t.datetime "updated_at",                    null: false
+    t.datetime "created_at",                                    null: false
+    t.datetime "updated_at",                                    null: false
     t.integer  "role_id",             limit: 4
-    t.boolean  "selection_submitted", limit: 1
+    t.boolean  "selection_submitted", limit: 1, default: false
   end
 
   add_index "users_protocols", ["protocol_id"], name: "index_users_protocols_on_protocol_id", using: :btree

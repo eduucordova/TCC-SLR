@@ -1,0 +1,244 @@
+<br>
+
+<ol class="breadcrumb">
+  <li><%= link_to 'Protocolo', protocol_path %></li>
+  <li><%= link_to 'Resultados Retornados', reference_path %></li>
+  <li><%= link_to 'Trabalhos selecionados', included_users_protocol_path %></li>
+  <li class="active"> Resolução de conflitos </li>
+  <li><%= link_to 'Seleção final', included_protocol_path %></li>
+
+</ol>
+
+<% unless @all_submitted%>
+    <div class="alert alert-info"><b> Nem todos os participantes terminaram a seleção </b></div>
+<% else %>
+    <% unless @ieee_conflicts.empty? %>
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <b><%= link_to 'IEEE Xplore Digital Library', ieee_path %> </b>
+          </div>
+          <div class="panel-body">
+            <div class="container-fluid">
+              <table class="table table-hover">
+                <thead>
+                <tr>
+                  <th>Título</th>
+                  <th>Autores</th>
+                  <th>Incluído</th>
+                  <th>Excluído</th>
+                  <th>Seleção</th>
+                  <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                <% @ieee_conflicts.each do |ref| %>
+                    <tr>
+                      <td><%= link_to ref.title, ref.link %></td>
+                      <td><%= ref.author %></td>
+                      <td><%= ref.times_included %></td>
+                      <td><%= ref.times_excluded %></td>
+                      <td>
+                        <%= link_to include_included_path(ref), method: :put, class: 'btn btn-default btn-sm' do %>
+                            <span class="glyphicon glyphicon-ok"></span>
+                            Incluir
+                        <% end %>
+                      </td>
+                      <td>
+                        <%= link_to exclude_included_path(ref), method: :put, class: 'btn btn-default btn-sm' do %>
+                            <span class="glyphicon glyphicon-remove"></span>
+                            Excluir
+                        <% end %>
+                      </td>
+                    </tr>
+                <% end %>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+    <% end %>
+
+    <% unless @scidir_conflicts.empty? %>
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <b><%= link_to 'Science Direct Digital Library', scidir_path %></b>
+          </div>
+          <div class="panel-body">
+            <div class="container-fluid">
+              <table class="table table-hover">
+                <thead>
+                <tr>
+                  <th>Título</th>
+                  <th>Autores</th>
+                  <th>Seleção</th>
+                  <th>Incluído</th>
+                  <th>Excluído</th>
+                  <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                <% @scidir_conflicts.each do |ref| %>
+                    <tr>
+                      <td><%= link_to ref.title, ref.link %></td>
+                      <td><%= ref.author %></td>
+                      <td><%= ref.times_included %></td>
+                      <td><%= ref.times_excluded %></td>
+                      <td>
+                        <%= link_to include_included_path(ref), method: :put, class: 'btn btn-default btn-sm' do %>
+                            <span class="glyphicon glyphicon-ok"></span>
+                            Incluir
+                        <% end %>
+                      </td>
+                      <td>
+                        <%= link_to exclude_included_path(ref), method: :put, class: 'btn btn-default btn-sm' do %>
+                            <span class="glyphicon glyphicon-remove"></span>
+                            Excluir
+                        <% end %>
+                      </td>
+                    </tr>
+                <% end %>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+    <% end %>
+
+    <% unless @scopu_conflicts.empty? %>
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <b><%= link_to 'Scopus Digital Library', scopu_path %></b>
+          </div>
+          <div class="panel-body">
+            <div class="container-fluid">
+              <table class="table table-hover">
+                <thead>
+                <tr>
+                  <th>Título</th>
+                  <th>Autores</th>
+                  <th>Seleção</th>
+                  <th>Incluído</th>
+                  <th>Excluído</th>
+                  <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                <% @scopu_conflicts.each do |ref| %>
+                    <tr>
+                      <td><%= link_to ref.title, ref.link %></td>
+                      <td><%= ref.author %></td>
+                      <td><%= ref.times_included %></td>
+                      <td><%= ref.times_excluded %></td>
+                      <td>
+                        <%= link_to include_included_path(ref), method: :put, class: 'btn btn-default btn-sm' do %>
+                            <span class="glyphicon glyphicon-ok"></span>
+                            Incluir
+                        <% end %>
+                      </td>
+                      <td>
+                        <%= link_to exclude_included_path(ref), method: :put, class: 'btn btn-default btn-sm' do %>
+                            <span class="glyphicon glyphicon-remove"></span>
+                            Excluir
+                        <% end %>
+                      </td>
+                    </tr>
+                <% end %>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+    <% end %>
+
+    <% unless @acm_conflicts.empty? %>
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <b><%= link_to 'ACM Digital Library', acm_path %></b>
+          </div>
+          <div class="panel-body">
+            <div class="container-fluid">
+              <table class="table table-hover">
+                <thead>
+                <tr>
+                  <th>Título</th>
+                  <th>Autores</th>
+                  <th>Seleção</th>
+                  <th>Incluído</th>
+                  <th>Excluído</th>
+                  <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                <% @acm_conflicts.each do |ref| %>
+                    <tr>
+                      <td><%= link_to ref.title, ref.link %></td>
+                      <td><%= ref.author %></td>
+                      <td><%= ref.times_included %></td>
+                      <td><%= ref.times_excluded %></td>
+                      <td>
+                        <%= link_to include_included_path(ref), method: :put, class: 'btn btn-default btn-sm' do %>
+                            <span class="glyphicon glyphicon-ok"></span>
+                            Incluir
+                        <% end %>
+                      </td>
+                      <td>
+                        <%= link_to exclude_included_path(ref), method: :put, class: 'btn btn-default btn-sm' do %>
+                            <span class="glyphicon glyphicon-remove"></span>
+                            Excluir
+                        <% end %>
+                      </td>
+                    </tr>
+                <% end %>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+    <% end %>
+
+    <% unless @springer_conflicts.empty? %>
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <b><%= link_to 'Springer Link Digital Library', springer_path %></b>
+          </div>
+          <div class="panel-body">
+            <div class="container-fluid">
+              <table class="table table-hover">
+                <thead>
+                <tr>
+                  <th>Título</th>
+                  <th>Autores</th>
+                  <th>Seleção</th>
+                  <th>Incluído</th>
+                  <th>Excluído</th>
+                  <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                <% @springer_conflicts.each do |ref| %>
+                    <tr>
+                      <td><%= link_to ref.title, ref.link %></td>
+                      <td><%= ref.author %></td>
+                      <td><%= ref.times_included %></td>
+                      <td><%= ref.times_excluded %></td>
+                      <td>
+                        <%= link_to include_included_path(ref), method: :put, class: 'btn btn-default btn-sm' do %>
+                            <span class="glyphicon glyphicon-ok"></span>
+                            Incluir
+                        <% end %>
+                      </td>
+                      <td>
+                        <%= link_to exclude_included_path(ref), method: :put, class: 'btn btn-default btn-sm' do %>
+                            <span class="glyphicon glyphicon-remove"></span>
+                            Excluir
+                        <% end %>
+                      </td>
+                    </tr>
+                <% end %>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+    <% end %>
+<% end %>
