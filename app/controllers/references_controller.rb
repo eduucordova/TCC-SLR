@@ -58,9 +58,12 @@ class ReferencesController < ApplicationController
       userProtocolId = user_range[:user_id].to_i
       range = user_range[:range].to_i
       hash[userProtocolId] = range
+      @user_protocol = UsersProtocol.find(userProtocolId)
       if @protocol.nil?
-        @protocol = UsersProtocol.find(userProtocolId).protocol
+        @protocol = @user_protocol.protocol
       end
+      @user_protocol.selection_submitted = false
+      @user_protocol.save!
     end
 
     if !hash.empty?
@@ -73,8 +76,9 @@ class ReferencesController < ApplicationController
       SpringersUsersProtocol.randomize_studies(hash, @protocol) if @protocol.springer?
 
       ScopusUsersProtocol.randomize_studies(hash, @protocol) if @protocol.scopus?
-
     end
+
+    Included.destroy_all(protocol_id: @protocol.id)
 
     redirect_to :back
   end
