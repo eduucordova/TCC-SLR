@@ -13,7 +13,7 @@
         <ss:Cell><ss:Data ss:Type="String">Conferência/Periódico</ss:Data></ss:Cell>
         <ss:Cell><ss:Data ss:Type="String">Biblioteca</ss:Data></ss:Cell>
       </ss:Row>
-      <% @included_acm.each do |ref| %>
+      <% @selected_acm.each do |ref| %>
           <ss:Row>
             <ss:Cell><ss:Data ss:Type="String"><%= ref.title %></ss:Data></ss:Cell>
             <ss:Cell><ss:Data ss:Type="String"><%= ref.author %></ss:Data></ss:Cell>
@@ -21,7 +21,7 @@
             <ss:Cell><ss:Data ss:Type="String">ACM Digital Library</ss:Data></ss:Cell>
           </ss:Row>
       <% end %>
-      <% @included_ieee.each do |ref| %>
+      <% @selected_ieee.each do |ref| %>
           <ss:Row>
             <ss:Cell><ss:Data ss:Type="String"><%= ref.title %></ss:Data></ss:Cell>
             <ss:Cell><ss:Data ss:Type="String"><%= ref.author %></ss:Data></ss:Cell>
@@ -29,7 +29,7 @@
             <ss:Cell><ss:Data ss:Type="String">IEEExplore</ss:Data></ss:Cell>
           </ss:Row>
       <% end %>
-      <% @included_scidir.each do |ref| %>
+      <% @selected_scidir.each do |ref| %>
           <ss:Row>
             <ss:Cell><ss:Data ss:Type="String"><%= ref.title %></ss:Data></ss:Cell>
             <ss:Cell><ss:Data ss:Type="String"><%= ref.author %></ss:Data></ss:Cell>
@@ -37,7 +37,7 @@
             <ss:Cell><ss:Data ss:Type="String">Science Direct</ss:Data></ss:Cell>
           </ss:Row>
       <% end %>
-      <% @included_springer.each do |ref| %>
+      <% @selected_springer.each do |ref| %>
           <ss:Row>
             <ss:Cell><ss:Data ss:Type="String"><%= ref.title %></ss:Data></ss:Cell>
             <ss:Cell><ss:Data ss:Type="String"><%= ref.author %></ss:Data></ss:Cell>

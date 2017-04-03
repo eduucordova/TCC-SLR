@@ -34,7 +34,7 @@ class ProtocolsController < ApplicationController
 
     @protocol.ieee = true
     @protocol.science_direct = true
-    @protocol.scopus = true
+    # @protocol.scopus = true
     @protocol.acm = true
     @protocol.springer = true
     @protocol.from = 2007
@@ -49,6 +49,7 @@ class ProtocolsController < ApplicationController
   # POST /protocols.json
   def create
     @protocol = current_user.protocols.build(protocol_params)
+
     attributes = protocol_params[:terms_attributes]
 
     @protocol.query = @protocol.generate_string(attributes)
@@ -71,7 +72,10 @@ class ProtocolsController < ApplicationController
     attributes = protocol_params[:terms_attributes]
 
     @protocol.query = @protocol.generate_string(attributes)
-
+    # Como a base Scopus não será mais utilizada, garantir que os
+    # protocolos anteriores à atualização não terão mais esta referência
+    @protocol.scopus = false
+    byebug
     respond_to do |format|
       if @protocol.update(protocol_params)
         format.html { redirect_to @protocol, notice: 'Protocol was successfully updated.' }
@@ -114,10 +118,10 @@ class ProtocolsController < ApplicationController
       @ieee = @ieee.search(query, protocol_id, max_results, from, to)
     end
 
-    if @protocol.scopus
-      @scopu = Scopu.new
-      @scopu = @scopu.search(query, protocol_id, max_results, from, to)
-    end
+    # if @protocol.scopus
+    #   @scopu = Scopu.new
+    #   @scopu = @scopu.search(query, protocol_id, max_results, from, to)
+    # end
 
     if @protocol.science_direct
       @scidir = Scidir.new
@@ -142,7 +146,7 @@ class ProtocolsController < ApplicationController
     @protocol = Protocol.find(params[:id])
     @user_protocol = UsersProtocol.where(protocol_id: params[:id], user_id: current_user.id).first
 
-    @selected_scopus = []
+    # @selected_scopus = []
     @selected_acm = []
     @selected_ieee = []
     @selected_scidir = []
@@ -167,15 +171,15 @@ class ProtocolsController < ApplicationController
       }
     end
 
-    if @protocol.scopus
-      scopus_id = ScopusUsersProtocol.where(users_protocol_id: @user_protocol, pre_selected: true, included: nil).select(:scopu_id)
-      @selected = Scopu.where(id: scopus_id)
-
-      @selected.each { |scopus|
-        @selected_scopus.push(scopus)
-      }
-
-    end
+    # if @protocol.scopus
+    #   scopus_id = ScopusUsersProtocol.where(users_protocol_id: @user_protocol, pre_selected: true, included: nil).select(:scopu_id)
+    #   @selected = Scopu.where(id: scopus_id)
+    #
+    #   @selected.each { |scopus|
+    #     @selected_scopus.push(scopus)
+    #   }
+    #
+    # end
 
     if @protocol.acm
       acms_id = AcmsUsersProtocol.where(users_protocol_id: @user_protocol, pre_selected: true, included: nil).select(:acm_id)
@@ -197,7 +201,7 @@ class ProtocolsController < ApplicationController
 
     @empty_ieee = (@selected_ieee.empty?) ? true : false
     @empty_scidir = (@selected_scidir.empty?) ? true : false
-    @empty_scopus = (@selected_scopus.empty?) ? true : false
+    # @empty_scopus = (@selected_scopus.empty?) ? true : false
     @empty_acm = (@selected_acm.empty?) ? true : false
     @empty_springer = (@selected_springer.empty?) ? true : false
 
@@ -209,7 +213,7 @@ class ProtocolsController < ApplicationController
 
     @included_ieee = []
     @included_scidir = []
-    @included_scopus = []
+    # @included_scopus = []
     @included_acm = []
     @included_springer = []
 
@@ -233,15 +237,15 @@ class ProtocolsController < ApplicationController
       @count_scidir = @included_scidir.count.to_s
     end
 
-    if @protocol.scopus
-      @included = Included.where("protocol_id = ? AND included = 1 AND name_database = 'scopus'", params[:id])
-
-      @included.each { |scopus|
-        @included_scopus.push(scopus)
-      }
-
-      @count_scopus = @included_scopus.count.to_s
-    end
+    # if @protocol.scopus
+    #   @included = Included.where("protocol_id = ? AND included = 1 AND name_database = 'scopus'", params[:id])
+    #
+    #   @included.each { |scopus|
+    #     @included_scopus.push(scopus)
+    #   }
+    #
+    #   @count_scopus = @included_scopus.count.to_s
+    # end
 
     if @protocol.acm
       @included = Included.where("protocol_id = ? AND included = 1 AND name_database = 'acm'", params[:id])
@@ -265,7 +269,7 @@ class ProtocolsController < ApplicationController
 
     @empty_ieee = (@included_ieee.empty?) ? true : false
     @empty_scidir = (@included_scidir.empty?) ? true : false
-    @empty_scopus = (@included_scopus.empty?) ? true : false
+    # @empty_scopus = (@included_scopus.empty?) ? true : false
     @empty_acm = (@included_acm.empty?) ? true : false
     @empty_springer = (@included_springer.empty?) ? true : false
 
