@@ -75,7 +75,6 @@ class ProtocolsController < ApplicationController
     # Como a base Scopus não será mais utilizada, garantir que os
     # protocolos anteriores à atualização não terão mais esta referência
     @protocol.scopus = false
-    byebug
     respond_to do |format|
       if @protocol.update(protocol_params)
         format.html { redirect_to @protocol, notice: 'Protocol was successfully updated.' }

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170307185938) do
+ActiveRecord::Schema.define(version: 20170221133915) do
 
   create_table "acms", force: :cascade do |t|
     t.text     "abstract",       limit: 65535
@@ -39,30 +39,6 @@ ActiveRecord::Schema.define(version: 20170307185938) do
 
   add_index "acms_users_protocols", ["acm_id"], name: "index_acms_users_protocols_on_acm_id", using: :btree
   add_index "acms_users_protocols", ["users_protocol_id"], name: "index_acms_users_protocols_on_users_protocol_id", using: :btree
-
-  create_table "engvillages", force: :cascade do |t|
-    t.string  "title",       limit: 255
-    t.string  "author",      limit: 255
-    t.text    "abstract",    limit: 65535
-    t.string  "pubtype",     limit: 255
-    t.string  "pubtitle",    limit: 255
-    t.string  "link",        limit: 255
-    t.string  "publisher",   limit: 255
-    t.boolean "included",    limit: 1
-    t.integer "protocol_id", limit: 4
-    t.boolean "selected",    limit: 1
-    t.integer "year",        limit: 4
-  end
-
-  create_table "engvillages_users_protocols", force: :cascade do |t|
-    t.boolean "included",          limit: 1
-    t.boolean "pre_selected",      limit: 1
-    t.integer "users_protocol_id", limit: 4
-    t.integer "engvillage_id",     limit: 4
-  end
-
-  add_index "engvillages_users_protocols", ["engvillage_id"], name: "index_engvillages_users_protocols_on_engvillage_id", using: :btree
-  add_index "engvillages_users_protocols", ["users_protocol_id"], name: "index_engvillages_users_protocols_on_users_protocol_id", using: :btree
 
   create_table "google_scholars", force: :cascade do |t|
     t.text     "abstract",    limit: 65535
@@ -121,26 +97,25 @@ ActiveRecord::Schema.define(version: 20170307185938) do
   end
 
   create_table "protocols", force: :cascade do |t|
-    t.string   "title",               limit: 255
-    t.string   "author",              limit: 255
-    t.text     "background",          limit: 65535
-    t.string   "research_question",   limit: 255
-    t.text     "strategy",            limit: 65535
-    t.text     "criteria",            limit: 65535
-    t.datetime "created_at",                        null: false
-    t.datetime "updated_at",                        null: false
-    t.text     "query",               limit: 65535
-    t.integer  "from",                limit: 4
-    t.integer  "to",                  limit: 4
-    t.boolean  "ieee",                limit: 1
-    t.boolean  "acm",                 limit: 1
-    t.boolean  "springer",            limit: 1
-    t.boolean  "science_direct",      limit: 1
-    t.boolean  "google_scholar",      limit: 1
-    t.string   "quality",             limit: 255
-    t.boolean  "scopus",              limit: 1
-    t.integer  "results_returned",    limit: 4
-    t.boolean  "engineering_village", limit: 1
+    t.string   "title",             limit: 255
+    t.string   "author",            limit: 255
+    t.text     "background",        limit: 65535
+    t.string   "research_question", limit: 255
+    t.text     "strategy",          limit: 65535
+    t.text     "criteria",          limit: 65535
+    t.datetime "created_at",                      null: false
+    t.datetime "updated_at",                      null: false
+    t.text     "query",             limit: 65535
+    t.integer  "from",              limit: 4
+    t.integer  "to",                limit: 4
+    t.boolean  "ieee",              limit: 1
+    t.boolean  "acm",               limit: 1
+    t.boolean  "springer",          limit: 1
+    t.boolean  "science_direct",    limit: 1
+    t.boolean  "google_scholar",    limit: 1
+    t.string   "quality",           limit: 255
+    t.boolean  "scopus",            limit: 1
+    t.integer  "results_returned",  limit: 4
   end
 
   create_table "references", force: :cascade do |t|
@@ -292,8 +267,6 @@ ActiveRecord::Schema.define(version: 20170307185938) do
 
   add_foreign_key "acms_users_protocols", "acms", on_delete: :cascade
   add_foreign_key "acms_users_protocols", "users_protocols", on_delete: :cascade
-  add_foreign_key "engvillages_users_protocols", "engvillages", on_delete: :cascade
-  add_foreign_key "engvillages_users_protocols", "users_protocols", on_delete: :cascade
   add_foreign_key "ieees_users_protocols", "ieees", on_delete: :cascade
   add_foreign_key "ieees_users_protocols", "users_protocols", on_delete: :cascade
   add_foreign_key "scidirs_users_protocols", "scidirs", on_delete: :cascade
