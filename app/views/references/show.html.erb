@@ -46,7 +46,7 @@
               <% if reference.database == 'ieee' %>
                   <tr>
                     <td>
-                      <% if reference.total_found == 0 %>
+                      <% if reference.total_found == 0 || @ieee.count == 0 %>
                           <%= reference.database_name %>
                       <% else %>
                           <%= link_to reference.database_name, ieees_users_protocol_path %>
@@ -69,7 +69,7 @@
               <% if reference.database == 'scidir' %>
                   <tr>
                     <td>
-                      <% if reference.total_found == 0 %>
+                      <% if reference.total_found == 0 || @scidir.count == 0  %>
                           <%= reference.database_name %>
                       <% else %>
                           <%= link_to reference.database_name, scidirs_users_protocol_path %>
@@ -92,7 +92,7 @@
               <% if reference.database == 'acm' %>
                   <tr>
                     <td>
-                      <% if reference.total_found == 0 %>
+                      <% if reference.total_found == 0 || @acm.count == 0  %>
                           <%= reference.database_name %>
                       <% else %>
                           <%= link_to reference.database_name, acms_users_protocol_path %>
@@ -115,7 +115,7 @@
               <% if reference.database == 'springer' %>
                   <tr>
                     <td>
-                      <% if reference.total_found == 0 %>
+                      <% if reference.total_found == 0 || @springer.count == 0  %>
                           <%= reference.database_name %>
                       <% else %>
                           <%= link_to reference.database_name, springers_users_protocol_path %>
