@@ -12,9 +12,10 @@
                     <table class="table table-hover" id="tblProtocols">
                         <thead>
                         <tr>
-                            <th>Título</th>
-                            <th>Submetido</th>
-                            <th>Papel</th>
+                          <th>Título</th>
+                          <th>Submetido</th>
+                          <th>Papel</th>
+                          <th></th>
                         </tr>
                         </thead>
                         <tbody>
@@ -23,6 +24,25 @@
                                 <td><%= link_to user_protocol.protocol.title, user_protocol.protocol %></td>
                                 <td><%= (user_protocol.protocol.created_at.to_s[0..10]) %></td>
                                 <td><%= user_protocol.role.name %></td>
+                                <td style="width: 130px">
+                                  <% if user_protocol.ref_exists %>
+                                      <%= link_to reference_path(user_protocol.protocol), class: "btn btn-default btn-sm", title: 'Seleção de artigos' do %>
+                                          <span class="glyphicon glyphicon-list-alt"></span>
+                                      <% end %>
+                                  <% else %>
+                                      <%= link_to search_protocol_path(user_protocol.protocol), class: "btn btn-default btn-sm", title: 'Buscar' do %>
+                                          <span class="glyphicon glyphicon-search"></span>
+                                      <% end %>
+                                  <% end %>
+                                  <% if user_protocol.role.name == 'Pesquisador' %>
+                                      <%= link_to edit_protocol_path(user_protocol.protocol), class: "btn btn-default btn-sm", title: 'Editar' do %>
+                                          <span class="glyphicon glyphicon-edit"></span>
+                                      <% end %>
+                                      <%= link_to user_protocol.protocol, method: :delete, data: { confirm: 'Tem certeza que deseja apagar o protocolo "' + user_protocol.protocol.title + '"?'}, class: "btn btn-default btn-sm", title: 'Apagar' do %>
+                                          <span class="glyphicon glyphicon-trash"></span>
+                                      <% end %>
+                                  <% end %>
+                                </td>
                             </tr>
                         <% end %>
                         </tbody>

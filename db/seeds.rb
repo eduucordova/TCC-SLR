@@ -8,3 +8,4 @@
 
 Role.create!(name: 'Pesquisador')
 Role.create!(name: 'Revisor')
+User.create!(name: 'Revisor')

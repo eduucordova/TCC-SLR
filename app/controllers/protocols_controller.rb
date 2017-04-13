@@ -5,10 +5,8 @@ class ProtocolsController < ApplicationController
   # GET /protocols.json
   def index
     if !current_user.nil?
-      @users_protocols = current_user.users_protocols.includes(:protocol).each do |user_protocol|
-        puts user_protocol.role.name
-        puts user_protocol.protocol.title
-        puts user_protocol.protocol.created_at
+      @users_protocols = current_user.users_protocols.includes(:protocol).order(created_at: :desc).each do |user_protocol|
+        puts user_protocol.ref_exists = reference_exist_by_id(user_protocol.protocol.id)
       end
     end
   end
@@ -20,6 +18,7 @@ class ProtocolsController < ApplicationController
     @users_protocols = @protocol.users_protocols.includes(:user).each do |user_protocol|
       puts user_protocol.role.name
       puts user_protocol.user.username
+      puts user_protocol.ref_exists
     end
 
     session[:protocol_id] = params[:id].to_i
@@ -34,7 +33,6 @@ class ProtocolsController < ApplicationController
 
     @protocol.ieee = true
     @protocol.science_direct = true
-    # @protocol.scopus = true
     @protocol.acm = true
     @protocol.springer = true
     @protocol.from = 2007
@@ -117,11 +115,6 @@ class ProtocolsController < ApplicationController
       @ieee = @ieee.search(query, protocol_id, max_results, from, to)
     end
 
-    # if @protocol.scopus
-    #   @scopu = Scopu.new
-    #   @scopu = @scopu.search(query, protocol_id, max_results, from, to)
-    # end
-
     if @protocol.science_direct
       @scidir = Scidir.new
       @scidir = @scidir.search(query, protocol_id, max_results, from, to)
@@ -138,19 +131,16 @@ class ProtocolsController < ApplicationController
     end
 
     redirect_to reference_url(protocol_id)
-
   end
 
   def selected
     @protocol = Protocol.find(params[:id])
     @user_protocol = UsersProtocol.where(protocol_id: params[:id], user_id: current_user.id).first
 
-    # @selected_scopus = []
     @selected_acm = []
     @selected_ieee = []
     @selected_scidir = []
     @selected_springer = []
-
 
     if @protocol.ieee
       ieees_id = IeeesUsersProtocol.where(users_protocol_id: @user_protocol, pre_selected: true, included: nil).select(:ieee_id)
@@ -169,16 +159,6 @@ class ProtocolsController < ApplicationController
         @selected_scidir.push(scidir)
       }
     end
-
-    # if @protocol.scopus
-    #   scopus_id = ScopusUsersProtocol.where(users_protocol_id: @user_protocol, pre_selected: true, included: nil).select(:scopu_id)
-    #   @selected = Scopu.where(id: scopus_id)
-    #
-    #   @selected.each { |scopus|
-    #     @selected_scopus.push(scopus)
-    #   }
-    #
-    # end
 
     if @protocol.acm
       acms_id = AcmsUsersProtocol.where(users_protocol_id: @user_protocol, pre_selected: true, included: nil).select(:acm_id)
@@ -200,7 +180,6 @@ class ProtocolsController < ApplicationController
 
     @empty_ieee = (@selected_ieee.empty?) ? true : false
     @empty_scidir = (@selected_scidir.empty?) ? true : false
-    # @empty_scopus = (@selected_scopus.empty?) ? true : false
     @empty_acm = (@selected_acm.empty?) ? true : false
     @empty_springer = (@selected_springer.empty?) ? true : false
 
@@ -212,7 +191,6 @@ class ProtocolsController < ApplicationController
 
     @included_ieee = []
     @included_scidir = []
-    # @included_scopus = []
     @included_acm = []
     @included_springer = []
 
@@ -236,16 +214,6 @@ class ProtocolsController < ApplicationController
       @count_scidir = @included_scidir.count.to_s
     end
 
-    # if @protocol.scopus
-    #   @included = Included.where("protocol_id = ? AND included = 1 AND name_database = 'scopus'", params[:id])
-    #
-    #   @included.each { |scopus|
-    #     @included_scopus.push(scopus)
-    #   }
-    #
-    #   @count_scopus = @included_scopus.count.to_s
-    # end
-
     if @protocol.acm
       @included = Included.where("protocol_id = ? AND included = 1 AND name_database = 'acm'", params[:id])
 
@@ -268,7 +236,6 @@ class ProtocolsController < ApplicationController
 
     @empty_ieee = (@included_ieee.empty?) ? true : false
     @empty_scidir = (@included_scidir.empty?) ? true : false
-    # @empty_scopus = (@included_scopus.empty?) ? true : false
     @empty_acm = (@included_acm.empty?) ? true : false
     @empty_springer = (@included_springer.empty?) ? true : false
 
@@ -303,5 +270,7 @@ class ProtocolsController < ApplicationController
   def reference_exist
     Reference.find_by_protocol_id(params[:id])
   end
-
+  def reference_exist_by_id(id)
+    Reference.find_by_protocol_id(id)
+  end
 end

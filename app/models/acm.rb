@@ -19,7 +19,7 @@ class Acm < ActiveRecord::Base
 
     total_found = total[0..index-2].gsub(/,/, '').to_f
 
-    not_found = total_found > max_results.to_f + 20000
+    not_found = total_found > max_results.to_f + 50000
 
     # If not found any result acm shows all references in index page after search
     unless not_found

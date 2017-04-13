@@ -235,7 +235,6 @@ class UsersProtocolsController < ApplicationController
     @acm_conflicts = Included.where(protocol_id: params[:id], name_database: 'acm', included: nil)
     @springer_conflicts = Included.where(protocol_id: params[:id], name_database: 'springer', included: nil)
     @scidir_conflicts = Included.where(protocol_id: params[:id], name_database: 'scidir', included: nil)
-    @scopu_conflicts = Included.where(protocol_id: params[:id], name_database: 'scopus', included: nil)
     @ieee_conflicts = Included.where(protocol_id: params[:id], name_database: 'ieee', included: nil)
   end
 

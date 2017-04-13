@@ -5,8 +5,13 @@ class Protocol < ActiveRecord::Base
   has_many :terms, :dependent => :destroy
   has_many :references
   accepts_nested_attributes_for :terms, :allow_destroy => true
-  accepts_nested_attributes_for :users_protocols, :allow_destroy => true
+  accepts_nested_attributes_for :users_protocols, :allow_destroy => true,
+                                reject_if: proc {
+                                    |attributes| attributes['user_id'].blank? || attributes['role_id'].blank?
+                                }
   validates_presence_of :title, :terms, :from, :to, :users_protocols
+
+  attr_accessor :ref_exists
 
   def clean_bases (protocol_id)
 
@@ -30,19 +35,21 @@ class Protocol < ActiveRecord::Base
 
     attributes.values.each_with_index do |term, index|
 
-      sinonimo = term[:sinonimo] == "" ? '' : '" OR "' + term[:sinonimo]
+      termo = term[:termo].parameterize
 
-      sinonimo2 = term[:sinonimo2] == "" ? '' : '" OR "' + term[:sinonimo2]
+      sinonimo = term[:sinonimo] == "" ? '' : '" OR "' + term[:sinonimo].parameterize
 
-      traducao = term[:traducao] == "" ? '' : '" OR "' + term[:traducao]
+      sinonimo2 = term[:sinonimo2] == "" ? '' : '" OR "' + term[:sinonimo2].parameterize
 
-      traducao2 = term[:traducao2] == "" ? '' : '" OR "' + term[:traducao2]
+      traducao = term[:traducao] == "" ? '' : '" OR "' + term[:traducao].parameterize
 
-      traducao3 = term[:traducao3] == "" ? '' : '" OR "' + term[:traducao3]
+      traducao2 = term[:traducao2] == "" ? '' : '" OR "' + term[:traducao2].parameterize
+
+      traducao3 = term[:traducao3] == "" ? '' : '" OR "' + term[:traducao3].parameterize
 
       @termos += (index == attributes.size - 1) ?
-          '("' + term[:termo] + traducao + sinonimo + sinonimo2 + traducao2 + traducao3 + '")' :
-          '("' + term[:termo] + traducao + sinonimo + sinonimo2 + traducao2 + traducao3 + '")' + ' AND '
+          '("' + termo + traducao + sinonimo + sinonimo2 + traducao2 + traducao3 + '")' :
+          '("' + termo + traducao + sinonimo + sinonimo2 + traducao2 + traducao3 + '")' + ' AND '
     end
 
     return @termos
