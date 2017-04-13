@@ -12,7 +12,7 @@ class UsersProtocolsController < ApplicationController
     @included_springer = []
 
     if @protocol.ieee
-      ieees_id = IeeesUsersProtocol.where(users_protocol_id: @user_protocol, included: true).select(:ieee_id)
+      ieees_id = IeeesUsersProtocol.where('users_protocol_id=? AND included=true OR maybe=true', @user_protocol).select(:ieee_id)
       @included = Ieee.where(id: ieees_id)
 
       @included.each { |ieee|
@@ -23,7 +23,7 @@ class UsersProtocolsController < ApplicationController
     end
 
     if @protocol.science_direct
-      scidir_id = ScidirsUsersProtocol.where(users_protocol_id: @user_protocol, included: true).select(:scidir_id)
+      scidir_id = ScidirsUsersProtocol.where('users_protocol_id=? AND included=true OR maybe=true', @user_protocol).select(:scidir_id)
       @included = Scidir.where(id: scidir_id)
 
       @included.each { |scidir|
@@ -34,7 +34,7 @@ class UsersProtocolsController < ApplicationController
     end
 
     if @protocol.scopus
-      scopus_id = ScopusUsersProtocol.where(users_protocol_id: @user_protocol, included: true).select(:scopu_id)
+      scopus_id = ScopusUsersProtocol.where('users_protocol_id=? AND included=true OR maybe=true', @user_protocol).select(:scopu_id)
       @included = Scopu.where(id: scopus_id)
 
       @included.each { |scopus|
@@ -45,7 +45,7 @@ class UsersProtocolsController < ApplicationController
     end
 
     if @protocol.acm
-      acms_id = AcmsUsersProtocol.where(users_protocol_id: @user_protocol, included: true).select(:acm_id)
+      acms_id = AcmsUsersProtocol.where('users_protocol_id=? AND included=true OR maybe=true', @user_protocol).select(:acm_id)
       @included = Acm.where(id: acms_id)
 
       @included.each { |acm|
@@ -56,7 +56,7 @@ class UsersProtocolsController < ApplicationController
     end
 
     if @protocol.springer
-      springers_id = SpringersUsersProtocol.where(users_protocol_id: @user_protocol, included: true).select(:springer_id)
+      springers_id = SpringersUsersProtocol.where('users_protocol_id=? AND included=true OR maybe=true', @user_protocol).select(:springer_id)
       @included = Springer.where(id: springers_id)
 
       @included.each { |springer|
@@ -99,7 +99,12 @@ class UsersProtocolsController < ApplicationController
               if IeeesUsersProtocol.where(ieee_id: ieee.id, users_protocol_id: user_protocol.id).first.included?
                 @included.times_included = @included.times_included + 1
               else
-                @included.times_excluded = @included.times_excluded + 1
+                if IeeesUsersProtocol.where(ieee_id: ieee.id, users_protocol_id: user_protocol.id).first.maybe?
+                  @included.times_excluded = @included.times_excluded + 1
+                  @included.times_included = @included.times_included + 1
+                else
+                  @included.times_excluded = @included.times_excluded + 1
+                end
               end
             end
           end
@@ -126,7 +131,12 @@ class UsersProtocolsController < ApplicationController
               if ScopusUsersProtocol.where(scopu_id: scopu.id, users_protocol_id: user_protocol.id).first.included?
                 @included.times_included = @included.times_included + 1
               else
-                @included.times_excluded = @included.times_excluded + 1
+                if ScopusUsersProtocol.where(scopu_id: scopu.id, users_protocol_id: user_protocol.id).first.maybe?
+                  @included.times_excluded = @included.times_excluded + 1
+                  @included.times_included = @included.times_included + 1
+                else
+                  @included.times_excluded = @included.times_excluded + 1
+                end
               end
             end
           end
@@ -153,7 +163,12 @@ class UsersProtocolsController < ApplicationController
               if ScidirsUsersProtocol.where(scidir_id: scidir.id, users_protocol_id: user_protocol.id).first.included?
                 @included.times_included = @included.times_included + 1
               else
-                @included.times_excluded = @included.times_excluded + 1
+                if ScidirsUsersProtocol.where(scidir_id: scidir.id, users_protocol_id: user_protocol.id).first.maybe?
+                  @included.times_excluded = @included.times_excluded + 1
+                  @included.times_included = @included.times_included + 1
+                else
+                  @included.times_excluded = @included.times_excluded + 1
+                end
               end
             end
           end
@@ -180,7 +195,12 @@ class UsersProtocolsController < ApplicationController
               if SpringersUsersProtocol.where(springer_id: springer.id, users_protocol_id: user_protocol.id).first.included?
                 @included.times_included = @included.times_included + 1
               else
-                @included.times_excluded = @included.times_excluded + 1
+                if SpringersUsersProtocol.where(springer_id: springer.id, users_protocol_id: user_protocol.id).first.maybe?
+                  @included.times_excluded = @included.times_excluded + 1
+                  @included.times_included = @included.times_included + 1
+                else
+                  @included.times_excluded = @included.times_excluded + 1
+                end
               end
             end
           end
@@ -207,7 +227,12 @@ class UsersProtocolsController < ApplicationController
               if AcmsUsersProtocol.where(acm_id: acm.id, users_protocol_id: user_protocol.id).first.included?
                 @included.times_included = @included.times_included + 1
               else
-                @included.times_excluded = @included.times_excluded + 1
+                if AcmsUsersProtocol.where(acm_id: acm.id, users_protocol_id: user_protocol.id).first.maybe?
+                  @included.times_excluded = @included.times_excluded + 1
+                  @included.times_included = @included.times_included + 1
+                else
+                  @included.times_excluded = @included.times_excluded + 1
+                end
               end
             end
           end
@@ -256,7 +281,7 @@ class UsersProtocolsController < ApplicationController
     @included.included = nil
   end
 
-  # Verifica se alguma busca já foi realizada para aquele protocolo
+# Verifica se alguma busca já foi realizada para aquele protocolo
   def reference_exist
     Reference.find_by_protocol_id(params[:id])
   end

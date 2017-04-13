@@ -1,6 +1,6 @@
 class ScopusUsersProtocolsController < ApplicationController
   before_action :set_session, only: [:show]
-  before_action :set_user_protocol, only: [:show, :select, :unselect, :include, :exclude]
+  before_action :set_user_protocol, only: [:show, :select, :unselect, :include, :exclude, :maybe]
 
   def show
     studies = Scopu.where(protocol_id: params[:id])
@@ -37,6 +37,14 @@ class ScopusUsersProtocolsController < ApplicationController
   def exclude
     @scopu = ScopusUsersProtocol.where(scopu_id: params[:id].to_i, users_protocol_id: @user_protocol).first
     @scopu.included = 0
+    @scopu.save!
+
+    redirect_to :back
+  end
+
+  def maybe
+    @scopu = ScopusUsersProtocol.where(scopu_id: params[:id], users_protocol_id: @user_protocol).first
+    @scopu.maybe = 1
     @scopu.save!
 
     redirect_to :back

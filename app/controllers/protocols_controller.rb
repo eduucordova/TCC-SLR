@@ -143,7 +143,7 @@ class ProtocolsController < ApplicationController
     @selected_springer = []
 
     if @protocol.ieee
-      ieees_id = IeeesUsersProtocol.where(users_protocol_id: @user_protocol, pre_selected: true, included: nil).select(:ieee_id)
+      ieees_id = IeeesUsersProtocol.where(users_protocol_id: @user_protocol, pre_selected: true, maybe: nil, included: nil).select(:ieee_id)
       @selected = Ieee.where(id: ieees_id)
 
       @selected.each { |ieee|
@@ -152,7 +152,7 @@ class ProtocolsController < ApplicationController
     end
 
     if @protocol.science_direct
-      scidirs_id = ScidirsUsersProtocol.where(users_protocol_id: @user_protocol, pre_selected: true, included: nil).select(:scidir_id)
+      scidirs_id = ScidirsUsersProtocol.where(users_protocol_id: @user_protocol, pre_selected: true, maybe: nil, included: nil).select(:scidir_id)
       @selected = Scidir.where(id: scidirs_id)
 
       @selected.each { |scidir|
@@ -161,7 +161,7 @@ class ProtocolsController < ApplicationController
     end
 
     if @protocol.acm
-      acms_id = AcmsUsersProtocol.where(users_protocol_id: @user_protocol, pre_selected: true, included: nil).select(:acm_id)
+      acms_id = AcmsUsersProtocol.where(users_protocol_id: @user_protocol, pre_selected: true, maybe: nil, included: nil).select(:acm_id)
       @selected = Acm.where(id: acms_id)
 
       @selected.each { |acm|
@@ -170,7 +170,7 @@ class ProtocolsController < ApplicationController
     end
 
     if @protocol.springer
-      springers_id = SpringersUsersProtocol.where(users_protocol_id: @user_protocol, pre_selected: true, included: nil).select(:springer_id)
+      springers_id = SpringersUsersProtocol.where(users_protocol_id: @user_protocol, pre_selected: true, maybe: nil, included: nil).select(:springer_id)
       @selected = Springer.where(id: springers_id)
 
       @selected.each { |springer|

@@ -1,6 +1,6 @@
 class IeeesUsersProtocolsController < ApplicationController
   before_action :set_session, only: [:show]
-  before_action :set_user_protocol, only: [:show, :select, :unselect, :include, :exclude]
+  before_action :set_user_protocol, only: [:show, :select, :unselect, :include, :exclude, :maybe]
 
   def show
     studies = Ieee.where(protocol_id: params[:id])
@@ -37,6 +37,14 @@ class IeeesUsersProtocolsController < ApplicationController
   def exclude
     @ieee = IeeesUsersProtocol.where(ieee_id: params[:id].to_i, users_protocol_id: @user_protocol).first
     @ieee.included = 0
+    @ieee.save!
+
+    redirect_to :back
+  end
+
+  def maybe
+    @ieee = IeeesUsersProtocol.where(ieee_id: params[:id], users_protocol_id: @user_protocol).first
+    @ieee.maybe = 1
     @ieee.save!
 
     redirect_to :back

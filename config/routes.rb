@@ -45,6 +45,7 @@ Rails.application.routes.draw do
       put 'unselect', to: 'springers_users_protocols#unselect'
       put 'include', to: 'springers_users_protocols#include'
       put 'exclude', to: 'springers_users_protocols#exclude'
+      put 'maybe', to: 'springers_users_protocols#maybe'
       get 'csv', to: 'springers_users_protocols#csv'
     end
   end
@@ -54,6 +55,7 @@ Rails.application.routes.draw do
       put 'unselect', to: 'scopus_users_protocols#unselect'
       put 'include', to: 'scopus_users_protocols#include'
       put 'exclude', to: 'scopus_users_protocols#exclude'
+      put 'maybe', to: 'scopus_users_protocols#maybe'
       get 'csv', to: 'scopus_users_protocols#csv'
     end
   end
@@ -63,6 +65,7 @@ Rails.application.routes.draw do
       put 'unselect', to: 'scidirs_users_protocols#unselect'
       put 'include', to: 'scidirs_users_protocols#include'
       put 'exclude', to: 'scidirs_users_protocols#exclude'
+      put 'maybe', to: 'scidirs_users_protocols#maybe'
       get 'csv', to: 'scidirs_users_protocols#csv'
     end
   end
@@ -72,6 +75,7 @@ Rails.application.routes.draw do
       put 'unselect', to: 'acms_users_protocols#unselect'
       put 'include', to: 'acms_users_protocols#include'
       put 'exclude', to: 'acms_users_protocols#exclude'
+      put 'maybe', to: 'acms_users_protocols#maybe'
       get 'csv', to: 'acms_users_protocols#csv'
     end
   end
@@ -81,6 +85,7 @@ Rails.application.routes.draw do
       put 'unselect', to: 'ieees_users_protocols#unselect'
       put 'include', to: 'ieees_users_protocols#include'
       put 'exclude', to: 'ieees_users_protocols#exclude'
+      put 'maybe', to: 'ieees_users_protocols#maybe'
       get 'csv', to: 'ieees_users_protocols#csv'
     end
   end

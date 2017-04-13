@@ -1,6 +1,6 @@
 class AcmsUsersProtocolsController < ApplicationController
   before_action :set_session, only: [:show]
-  before_action :set_user_protocol, only: [:show, :select, :unselect, :include, :exclude]
+  before_action :set_user_protocol, only: [:show, :select, :unselect, :include, :exclude, :maybe]
 
   def show
     studies = Acm.where(protocol_id: params[:id])
@@ -37,6 +37,14 @@ class AcmsUsersProtocolsController < ApplicationController
   def exclude
     @acm = AcmsUsersProtocol.where(acm_id: params[:id].to_i, users_protocol_id: @user_protocol).first
     @acm.included = 0
+    @acm.save!
+
+    redirect_to :back
+  end
+
+  def maybe
+    @acm = AcmsUsersProtocol.where(acm_id: params[:id].to_i, users_protocol_id: @user_protocol).first
+    @acm.maybe = 1
     @acm.save!
 
     redirect_to :back

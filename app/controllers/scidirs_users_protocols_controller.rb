@@ -1,6 +1,6 @@
 class ScidirsUsersProtocolsController < ApplicationController
   before_action :set_session, only: [:show]
-  before_action :set_user_protocol, only: [:show, :select, :unselect,:include, :exclude]
+  before_action :set_user_protocol, only: [:show, :select, :unselect,:include, :exclude, :maybe]
 
   def show
     studies = Scidir.where(protocol_id: params[:id])
@@ -37,6 +37,14 @@ class ScidirsUsersProtocolsController < ApplicationController
   def exclude
     @scidir = ScidirsUsersProtocol.where(scidir_id: params[:id].to_i, users_protocol_id: @user_protocol).first
     @scidir.included = 0
+    @scidir.save!
+
+    redirect_to :back
+  end
+
+  def maybe
+    @scidir = ScidirsUsersProtocol.where(scidir_id: params[:id], users_protocol_id: @user_protocol).first
+    @scidir.maybe = 1
     @scidir.save!
 
     redirect_to :back

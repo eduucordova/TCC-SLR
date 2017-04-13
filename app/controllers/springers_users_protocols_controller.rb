@@ -1,6 +1,6 @@
 class SpringersUsersProtocolsController < ApplicationController
   before_action :set_session, only: [:show]
-  before_action :set_user_protocol, only: [:show, :select, :unselect, :include, :exclude]
+  before_action :set_user_protocol, only: [:show, :select, :unselect, :include, :exclude, :maybe]
 
   def show
     studies = Springer.where(protocol_id: params[:id])
@@ -37,6 +37,14 @@ class SpringersUsersProtocolsController < ApplicationController
   def exclude
     @springer = SpringersUsersProtocol.where(springer_id: params[:id].to_i, users_protocol_id: @user_protocol).first
     @springer.included = 0
+    @springer.save!
+
+    redirect_to :back
+  end
+
+  def maybe
+    @springer = SpringersUsersProtocol.where(springer_id: params[:id].to_i, users_protocol_id: @user_protocol).first
+    @springer.maybe = 1
     @springer.save!
 
     redirect_to :back
