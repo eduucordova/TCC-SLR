@@ -12,7 +12,7 @@ class UsersProtocolsController < ApplicationController
     @included_springer = []
 
     if @protocol.ieee
-      ieees_id = IeeesUsersProtocol.where('users_protocol_id=? AND included=true OR maybe=true', @user_protocol).select(:ieee_id)
+      ieees_id = IeeesUsersProtocol.where('users_protocol_id=? AND (included=true OR maybe=true)', @user_protocol).select(:ieee_id)
       @included = Ieee.where(id: ieees_id)
 
       @included.each { |ieee|
@@ -23,7 +23,7 @@ class UsersProtocolsController < ApplicationController
     end
 
     if @protocol.science_direct
-      scidir_id = ScidirsUsersProtocol.where('users_protocol_id=? AND included=true OR maybe=true', @user_protocol).select(:scidir_id)
+      scidir_id = ScidirsUsersProtocol.where('users_protocol_id=? AND (included=true OR maybe=true)', @user_protocol).select(:scidir_id)
       @included = Scidir.where(id: scidir_id)
 
       @included.each { |scidir|
@@ -34,7 +34,7 @@ class UsersProtocolsController < ApplicationController
     end
 
     if @protocol.scopus
-      scopus_id = ScopusUsersProtocol.where('users_protocol_id=? AND included=true OR maybe=true', @user_protocol).select(:scopu_id)
+      scopus_id = ScopusUsersProtocol.where('users_protocol_id=? AND (included=true OR maybe=true)', @user_protocol).select(:scopu_id)
       @included = Scopu.where(id: scopus_id)
 
       @included.each { |scopus|
@@ -45,7 +45,7 @@ class UsersProtocolsController < ApplicationController
     end
 
     if @protocol.acm
-      acms_id = AcmsUsersProtocol.where('users_protocol_id=? AND included=true OR maybe=true', @user_protocol).select(:acm_id)
+      acms_id = AcmsUsersProtocol.where('users_protocol_id=? AND (included=true OR maybe=true)', @user_protocol).select(:acm_id)
       @included = Acm.where(id: acms_id)
 
       @included.each { |acm|
@@ -56,7 +56,7 @@ class UsersProtocolsController < ApplicationController
     end
 
     if @protocol.springer
-      springers_id = SpringersUsersProtocol.where('users_protocol_id=? AND included=true OR maybe=true', @user_protocol).select(:springer_id)
+      springers_id = SpringersUsersProtocol.where('users_protocol_id=? AND (included=true OR maybe=true)', @user_protocol).select(:springer_id)
       @included = Springer.where(id: springers_id)
 
       @included.each { |springer|

@@ -87,6 +87,8 @@ class ProtocolsController < ApplicationController
   # DELETE /protocols/1
   # DELETE /protocols/1.json
   def destroy
+    @protocol.clean_bases(params[:id])
+
     @protocol.destroy
     respond_to do |format|
       format.html { redirect_to protocols_url, notice: 'Protocol was successfully destroyed.' }

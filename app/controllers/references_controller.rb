@@ -67,6 +67,8 @@ class ReferencesController < ApplicationController
     end
 
     if !hash.empty?
+      Included.where(protocol_id: @protocol.id).delete_all
+
       IeeesUsersProtocol.randomize_studies(hash, @protocol) if @protocol.ieee?
 
       ScidirsUsersProtocol.randomize_studies(hash, @protocol) if @protocol.science_direct?
