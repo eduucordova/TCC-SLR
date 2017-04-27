@@ -9,7 +9,7 @@ class Acm < ActiveRecord::Base
 
     require 'open-uri'
 
-    url = 'http://dl.acm.org/results.cfm?query=' + query + '&since_year=' + from + '&before_year=' + to
+    url = 'http://dl.acm.org/results.cfm?query=' + query + '&dte=' + from + '&bfr=' + to
 
     doc = Nokogiri::HTML(open(url, 'User-Agent' => 'firefox'))
 
@@ -28,7 +28,7 @@ class Acm < ActiveRecord::Base
 
       while i < max
 
-        search_query = "http://dl.acm.org/results.cfm?query=" + query + "&start=" + j.to_s + "&since_year=" + from + "&before_year=" + to
+        search_query = "http://dl.acm.org/results.cfm?query=" + query + "&start=" + j.to_s + "&dte=" + from + "&bfr=" + to
 
         doc = Nokogiri::HTML(open(search_query, 'User-Agent' => 'firefox'))
 

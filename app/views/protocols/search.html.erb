@@ -70,7 +70,7 @@
               <% if @protocol.acm %>
                   <tr>
                     <td> ACM Digital Library </td>
-                    <td><%= @protocol.query + '&since_year=' + @protocol.from.to_s + '&before_year=' + @protocol.to.to_s %></td>
+                    <td><%= @protocol.query + '&dte=' + @protocol.from.to_s + '&bfr=' + @protocol.to.to_s %></td>
                   </tr>
               <% end %>
               <% if @protocol.springer %>
